@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/rest/auth")
+@RequestMapping("/test")
 public class ApplicationController {
-    @GetMapping("/process")
-    public String process(){
+    @GetMapping
+    public String testing(){
         return "passed the spring security through DB";
     }
 }
