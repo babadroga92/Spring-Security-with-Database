@@ -1,41 +1,42 @@
 package com.school.SpringSecuritywithDatabase.model;
 
+import com.school.SpringSecuritywithDatabase.enums.Roles;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
-public class User {
+public  class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
+    private int id;
     private String username;
     private String password;
     private String email;
     @Enumerated(EnumType.STRING)
     private Roles roles;
 
-    public User() {
+    protected User() {
     }
 
-    public User(int userId, String username, String password, String email) {
-        this.userId = userId;
+    protected User(int id, String username, String password, String email) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getId() {
+        return id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsername() {
         return username;
     }
-    ///bilo stafafasfa
 
     public void setUsername(String username) {
         this.username = username;

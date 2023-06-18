@@ -1,4 +1,4 @@
-package com.school.SpringSecuritywithDatabase.model;
+package com.school.SpringSecuritywithDatabase.securityconfig;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -27,15 +27,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        http.authorizeRequests()
-                .antMatchers("/test/**")
-                .hasRole(Roles.STUDENT.name())
-                .anyRequest().permitAll()
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/user/**").permitAll()
+                .antMatchers("/student/**").hasRole("STUDENT")
+                .antMatchers("/professor/**").hasRole("PROFESSOR")
+                .anyRequest().authenticated()
                 .and()
-                .formLogin();
+                .httpBasic();
     }
-
     @Bean
     public BCryptPasswordEncoder encodePwd(){
         return new BCryptPasswordEncoder();

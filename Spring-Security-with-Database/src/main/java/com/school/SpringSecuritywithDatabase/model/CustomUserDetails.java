@@ -1,5 +1,6 @@
 package com.school.SpringSecuritywithDatabase.model;
 
+import com.school.SpringSecuritywithDatabase.enums.Roles;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
