@@ -1,5 +1,8 @@
 package com.school.SpringSecuritywithDatabase.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.school.SpringSecuritywithDatabase.enums.Grade;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,14 +15,30 @@ public class Student {
     private int id;
     @Column(name = "name")
     private String name;
+//    @Enumerated(EnumType.STRING)
+//    private Grade grade;
+
+    @ManyToMany
+    @JoinTable(
+            name = "courses_taken",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    @JsonIgnore // ZASTO MI TREBA OVO DA BIH VRATIO LISTU SVIH UCENIKA??
+    private List<Courses> courses;
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonIgnore // ZASTO MI TREBA OVO DA BIH VRATIO LISTU SVIH UCENIKA??
     private User user;
-    @OneToMany
-    @JoinColumn(name = "student")
-    private List<Courses> courses;
+
 
     public Student() {
+    }
+
+    public Student(String name, List<Courses> courses, User user) {
+        this.name = name;
+        this.courses = courses;
+        this.user = user;
     }
 
     public Student(String name) {
@@ -42,13 +61,6 @@ public class Student {
         this.name = name;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public List<Courses> getCourses() {
         return courses;
@@ -57,4 +69,13 @@ public class Student {
     public void setCourses(List<Courses> courses) {
         this.courses = courses;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }

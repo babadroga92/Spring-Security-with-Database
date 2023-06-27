@@ -1,24 +1,44 @@
 package com.school.SpringSecuritywithDatabase.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.school.SpringSecuritywithDatabase.model.CoursesTaken;
+import com.school.SpringSecuritywithDatabase.model.Student;
+import com.school.SpringSecuritywithDatabase.service.StudentService;
+import com.school.SpringSecuritywithDatabase.service.StudentServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/student")
 public class StudentController {
-    @GetMapping
-    public String testing(){
-        return "passed the spring security through DB";
+
+    private StudentService studentService;
+@Autowired
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
     }
 
-    @GetMapping("/read")
-    public String read(){
-        return "read";
+    @PostMapping
+    public String addStudent(@RequestBody @Valid Student student){
+        studentService.addStudent(student);
+        return "Student added";
     }
 
-    @GetMapping("/write")
-    public String write(){
-        return "write";
+    @GetMapping("/list")
+    public List<Student> findAll(){
+        return this.studentService.findAll();
     }
+
+    @DeleteMapping("/{id}")
+    public String deleteStudent(@PathVariable int id){
+        studentService.deleteById(id);
+        return "student with id: " + id + " deleted";
+    }
+//    @GetMapping("/allCourses")
+//    public List<CoursesTaken> findByStudent(@RequestParam(name = "studentId") int studentId){
+//        return studentService.findByStudent(studentId);
+//    }
 }

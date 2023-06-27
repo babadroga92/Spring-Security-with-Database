@@ -3,6 +3,7 @@ package com.school.SpringSecuritywithDatabase.securityconfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,8 +32,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/user/**").permitAll()
+                .antMatchers("/coursesTaken/**").permitAll()
                 .antMatchers("/student/**").hasRole("STUDENT")
-                .antMatchers("/professor/**").hasRole("PROFESSOR")
+                .antMatchers("/courses/**").hasRole("PROFESSOR")
+                .antMatchers("/professor/**", "/coursesTaught/**").hasRole("PROFESSOR")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();

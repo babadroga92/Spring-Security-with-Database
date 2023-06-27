@@ -13,11 +13,21 @@ public class Professor {
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-    @OneToMany
-    @JoinColumn(name = "professor")
+    @ManyToMany
+    @JoinTable(
+            name = "courses_taught",
+            joinColumns = @JoinColumn(name = "professor_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
     private List<Courses> courses;
 
     public Professor() {
+    }
+
+    public Professor(String name, User user, List<Courses> courses) {
+        this.name = name;
+        this.user = user;
+        this.courses = courses;
     }
 
     public Professor(String name) {

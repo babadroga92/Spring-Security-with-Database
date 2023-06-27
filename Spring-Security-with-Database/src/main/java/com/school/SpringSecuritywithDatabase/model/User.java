@@ -10,20 +10,24 @@ public  class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String username;
     private String password;
     private String email;
     @Enumerated(EnumType.STRING)
     private Roles roles;
 
-    protected User() {
+
+    public User() {
     }
 
-    protected User(int id, String username, String password, String email) {
+    public User(int id, String username, String password, String email, Roles roles) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
+        this.roles = roles;
+
     }
 
     public int getId() {
@@ -65,4 +69,6 @@ public  class User {
     public void setRoles(Roles roles) {
         this.roles = roles;
     }
+
+
 }
