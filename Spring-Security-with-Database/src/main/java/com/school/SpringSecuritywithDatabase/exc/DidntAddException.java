@@ -4,6 +4,7 @@ public class DidntAddException extends RuntimeException {
     private String msg;
 
     public DidntAddException(String msg) {
+        super(msg);
         this.msg = msg;
     }
 

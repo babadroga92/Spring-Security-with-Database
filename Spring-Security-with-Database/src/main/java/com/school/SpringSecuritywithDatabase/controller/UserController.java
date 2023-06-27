@@ -17,7 +17,7 @@ public class UserController {
     private CustomUserDetailsService customUserDetailsService;
     @Autowired
     private UserDao userDao;
-    @PostMapping("/registerUser")
+    @PostMapping("/register")
     public String addUser(@RequestBody User user){
         customUserDetailsService.addUser(user);
         return "User added";

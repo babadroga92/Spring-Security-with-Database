@@ -5,6 +5,7 @@ public class WrongIdException extends RuntimeException{
     private String msg;
 
     public WrongIdException(String msg) {
+        super(msg);
         this.msg = msg;
     }
 

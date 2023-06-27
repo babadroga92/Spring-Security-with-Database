@@ -1,10 +1,9 @@
 package com.school.SpringSecuritywithDatabase.exc;
 
-public class PasswordsDoNotMatch extends RuntimeException{
-
+public class UserWithUsernameAlreadyExists extends RuntimeException{
     private String msg;
 
-    public PasswordsDoNotMatch(String msg) {
+    public UserWithUsernameAlreadyExists(String msg) {
         super(msg);
         this.msg = msg;
     }

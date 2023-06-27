@@ -1,10 +1,9 @@
 package com.school.SpringSecuritywithDatabase.exc;
 
-public class PasswordsDoNotMatch extends RuntimeException{
-
+public class ExceededNumberOfAdmins extends RuntimeException{
     private String msg;
 
-    public PasswordsDoNotMatch(String msg) {
+    public ExceededNumberOfAdmins(String msg) {
         super(msg);
         this.msg = msg;
     }

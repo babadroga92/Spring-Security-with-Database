@@ -1,5 +1,6 @@
 package com.school.SpringSecuritywithDatabase.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
@@ -15,8 +16,10 @@ public class Courses {
     private String name;
 
     @ManyToMany(mappedBy = "courses")
+    @JsonIgnore
     private List<Student> student;
     @ManyToMany(mappedBy = "courses")
+    @JsonIgnore
     private List<Professor> professors;
 
 

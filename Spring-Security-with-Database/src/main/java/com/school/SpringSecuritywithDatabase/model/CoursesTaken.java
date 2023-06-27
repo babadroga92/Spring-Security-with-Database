@@ -1,5 +1,6 @@
 package com.school.SpringSecuritywithDatabase.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.school.SpringSecuritywithDatabase.enums.Grade;
 
 import javax.persistence.*;
@@ -13,10 +14,12 @@ public class CoursesTaken {
 
     @ManyToOne
     @JoinColumn(name = "student_id")
+    @JsonIgnore
     private Student student;
 
     @ManyToOne
     @JoinColumn(name = "course_id")
+    @JsonIgnore
     private Courses course;
 
     @Column(name = "grade")

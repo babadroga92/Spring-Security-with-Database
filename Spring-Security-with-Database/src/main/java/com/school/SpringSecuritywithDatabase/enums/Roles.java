@@ -6,7 +6,8 @@ import java.util.List;
 
 public enum Roles {
     STUDENT,
-    PROFESSOR
+    PROFESSOR,
+    ADMIN
 
 
 

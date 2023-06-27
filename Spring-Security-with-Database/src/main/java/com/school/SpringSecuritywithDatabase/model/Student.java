@@ -15,8 +15,6 @@ public class Student {
     private int id;
     @Column(name = "name")
     private String name;
-//    @Enumerated(EnumType.STRING)
-//    private Grade grade;
 
     @ManyToMany
     @JoinTable(
@@ -28,7 +26,6 @@ public class Student {
     private List<Courses> courses;
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @JsonIgnore // ZASTO MI TREBA OVO DA BIH VRATIO LISTU SVIH UCENIKA??
     private User user;
 
 

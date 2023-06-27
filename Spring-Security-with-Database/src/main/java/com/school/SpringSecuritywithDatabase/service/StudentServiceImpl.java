@@ -2,11 +2,14 @@ package com.school.SpringSecuritywithDatabase.service;
 
 import com.school.SpringSecuritywithDatabase.dao.CoursesTakenDao;
 import com.school.SpringSecuritywithDatabase.dao.StudentDao;
+import com.school.SpringSecuritywithDatabase.exc.WrongIdException;
+import com.school.SpringSecuritywithDatabase.model.Courses;
 import com.school.SpringSecuritywithDatabase.model.CoursesTaken;
 import com.school.SpringSecuritywithDatabase.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,8 +44,18 @@ public class StudentServiceImpl implements StudentService{
         return null;
     }
 
-//    @Override
-//    public List<CoursesTaken> findByStudent(int studentId) {
-//        return this.coursesTakenDao.findByStudent(studentId);
-//    }
+    @Override
+    public Student findById(int id) {
+        Optional<Student> optional = this.studentDao.findById(id);
+        if(optional.isPresent()){
+            return optional.get();
+        }else {
+            throw new WrongIdException("Student with " + id + " doesn't exist");
+        }
+    }
+
+    @Override
+    public List<Courses> findAllCoursesByStudentId(int id) {
+        return this.coursesTakenDao.findAllCoursesByStudentId(id);
+    }
 }

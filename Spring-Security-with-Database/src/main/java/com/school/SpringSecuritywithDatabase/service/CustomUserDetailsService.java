@@ -3,7 +3,9 @@ package com.school.SpringSecuritywithDatabase.service;
 import com.school.SpringSecuritywithDatabase.dao.UserDao;
 import com.school.SpringSecuritywithDatabase.dto.UserDTO;
 import com.school.SpringSecuritywithDatabase.exc.DidntAddException;
+import com.school.SpringSecuritywithDatabase.exc.ExceededNumberOfAdmins;
 import com.school.SpringSecuritywithDatabase.exc.PasswordsDoNotMatch;
+import com.school.SpringSecuritywithDatabase.exc.UserWithUsernameAlreadyExists;
 import com.school.SpringSecuritywithDatabase.model.CustomUserDetails;
 import com.school.SpringSecuritywithDatabase.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +61,15 @@ public class CustomUserDetailsService implements UserDetailsService {
       return "finally";
     }
 
-    public String addUser(User user){
+    public String addUser(User user) throws ExceededNumberOfAdmins, UserWithUsernameAlreadyExists{
+        User userdb = userDao.findByUsername(user.getUsername());
+        if(userdb!=null){
+            throw new UserWithUsernameAlreadyExists("This username already exists");
+        }
+        Integer numberOfAdmins = userDao.numberOfAdmins();
+        if(numberOfAdmins>=2){
+            throw new ExceededNumberOfAdmins("There is already 2 admin users in the system");
+        }
         String pwd = user.getPassword();
         String encryptedPwd = passwordEncoder.encode(pwd);
         user.setPassword(encryptedPwd);
