@@ -9,4 +9,5 @@ public interface ProfessorService {
     Professor addProfessor(Professor professor);
 
     List<Courses> findAllCoursesByProfessorId(int professorId);
+
 }

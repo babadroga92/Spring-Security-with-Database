@@ -3,6 +3,7 @@ package com.school.SpringSecuritywithDatabase.service;
 import com.school.SpringSecuritywithDatabase.dao.CoursesTaughtDao;
 import com.school.SpringSecuritywithDatabase.dao.ProfessorDao;
 import com.school.SpringSecuritywithDatabase.model.Courses;
+import com.school.SpringSecuritywithDatabase.model.CoursesTaught;
 import com.school.SpringSecuritywithDatabase.model.Professor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,4 +31,6 @@ public class ProfessorServiceImpl implements ProfessorService{
     public List<Courses> findAllCoursesByProfessorId(int professorId) {
         return coursesTaughtDao.findAllCoursesByProfessorId(professorId);
     }
+
+
 }
