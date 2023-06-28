@@ -5,7 +5,7 @@ import com.school.SpringSecuritywithDatabase.dao.StudentDao;
 import com.school.SpringSecuritywithDatabase.exc.NotEnrolled;
 import com.school.SpringSecuritywithDatabase.exc.WrongIdException;
 import com.school.SpringSecuritywithDatabase.model.Courses;
-import com.school.SpringSecuritywithDatabase.model.CoursesTaken;
+
 import com.school.SpringSecuritywithDatabase.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

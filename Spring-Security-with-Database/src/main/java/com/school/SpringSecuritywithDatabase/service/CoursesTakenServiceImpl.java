@@ -2,7 +2,6 @@ package com.school.SpringSecuritywithDatabase.service;
 
 import com.school.SpringSecuritywithDatabase.dao.CoursesTakenDao;
 import com.school.SpringSecuritywithDatabase.model.CoursesTaken;
-import com.school.SpringSecuritywithDatabase.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
