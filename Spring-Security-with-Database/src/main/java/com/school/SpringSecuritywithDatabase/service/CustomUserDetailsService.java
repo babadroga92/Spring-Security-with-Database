@@ -64,7 +64,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     public String addUser(User user) throws ExceededNumberOfAdmins, UserWithUsernameAlreadyExists{
         User userdb = userDao.findByUsername(user.getUsername());
         if(userdb!=null){
+
             throw new UserWithUsernameAlreadyExists("This username already exists");
+
         }
         Integer numberOfAdmins = userDao.numberOfAdmins();
         if(numberOfAdmins>=2){

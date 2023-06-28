@@ -23,11 +23,6 @@ public class UserController {
         return "User added";
     }
 
-//    @DeleteMapping("/{id}")
-//    public String deleteUser(@PathVariable int id){
-//        userDao.deleteById(id);
-//        return "user with id: " + id + " deleted";
-//    }
     @PutMapping("/updatePsswd")
     public String updatePassword(@RequestBody  UserDTO userDTO){
         return this.customUserDetailsService.updatePassword(userDTO);

@@ -2,6 +2,7 @@ package com.school.SpringSecuritywithDatabase.service;
 
 import com.school.SpringSecuritywithDatabase.dao.CoursesTakenDao;
 import com.school.SpringSecuritywithDatabase.dao.StudentDao;
+import com.school.SpringSecuritywithDatabase.exc.NotEnrolled;
 import com.school.SpringSecuritywithDatabase.exc.WrongIdException;
 import com.school.SpringSecuritywithDatabase.model.Courses;
 import com.school.SpringSecuritywithDatabase.model.CoursesTaken;
@@ -50,12 +51,20 @@ public class StudentServiceImpl implements StudentService{
         if(optional.isPresent()){
             return optional.get();
         }else {
-            throw new WrongIdException("Student with " + id + " doesn't exist");
+            throw new WrongIdException("Student with " + id + " doesn't exist.");
         }
     }
 
     @Override
-    public List<Courses> findAllCoursesByStudentId(int id) {
-        return this.coursesTakenDao.findAllCoursesByStudentId(id);
+    public List<Courses> findAllCoursesByStudentId(int id)throws NotEnrolled {
+        Optional<Student> student = studentDao.findById(id);
+        if (!student.isPresent()) {
+            throw new WrongIdException("Student with id " + id + " doesn't exist.");
+        }
+        List<Courses> courses = coursesTakenDao.findAllCoursesByStudentId(id);
+        if(courses.isEmpty()){
+            throw new NotEnrolled("Student with id " + id + " is not enrolled to any class." );
+        }
+        return courses;
     }
 }

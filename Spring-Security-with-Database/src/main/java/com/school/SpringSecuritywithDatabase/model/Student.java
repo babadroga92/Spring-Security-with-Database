@@ -22,7 +22,7 @@ public class Student {
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
-    @JsonIgnore // ZASTO MI TREBA OVO DA BIH VRATIO LISTU SVIH UCENIKA??
+    @JsonIgnore
     private List<Courses> courses;
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")

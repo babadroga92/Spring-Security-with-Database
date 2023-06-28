@@ -1,5 +1,7 @@
 package com.school.SpringSecuritywithDatabase.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 @Entity
@@ -19,6 +21,7 @@ public class Professor {
             joinColumns = @JoinColumn(name = "professor_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
+    @JsonIgnore
     private List<Courses> courses;
 
     public Professor() {
