@@ -1,11 +1,14 @@
 package com.school.SpringSecuritywithDatabase.service;
 import com.school.SpringSecuritywithDatabase.dao.CoursesDao;
 import com.school.SpringSecuritywithDatabase.dao.CoursesTaughtDao;
+import com.school.SpringSecuritywithDatabase.dao.ProfessorDao;
 import com.school.SpringSecuritywithDatabase.exc.WrongIdException;
 import com.school.SpringSecuritywithDatabase.model.Courses;
 import com.school.SpringSecuritywithDatabase.model.CoursesTaught;
 import com.school.SpringSecuritywithDatabase.model.CoursesTaughtRequest;
+import com.school.SpringSecuritywithDatabase.model.Professor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,9 +21,20 @@ public class CoursesTaughtServiceImpl implements CoursesTaughtService {
     @Autowired
     private CoursesDao coursesDao;
 
+    @Autowired
+    private ProfessorDao professorDao;
+
     @Override
-    public CoursesTaught addCoursesTaught(CoursesTaught coursesTaught) {
-        return this.coursesTaughtDao.save(coursesTaught);
+    public CoursesTaught addCoursesTaught(CoursesTaught coursesTaught) throws WrongIdException {
+        int professorId = coursesTaught.getProfessor().getId();
+        Optional<Professor> optionalProfessor = professorDao.findById(professorId);
+        if (optionalProfessor.isPresent()) {
+            Professor professor = optionalProfessor.get();
+            coursesTaught.setProfessor(professor);
+            return this.coursesTaughtDao.save(coursesTaught);
+        } else {
+            throw new WrongIdException("Professor with ID " + professorId + " doesn't exist.");
+        }
     }
 
     @Override
@@ -49,6 +63,26 @@ public class CoursesTaughtServiceImpl implements CoursesTaughtService {
             }
         } else {
             throw new WrongIdException("CourseTaught with ID " + id + " doesn't exist.");
+        }
+    }
+
+    @Override
+    public CoursesTaught updateCourseByProfessor(CoursesTaughtRequest request, int professorId, int courseId) {
+        CoursesTaught cT = coursesTaughtDao.findCourseTaughtByProfessorAndByCourse(professorId, courseId);
+        if (cT != null) {
+            int Id = request.getCourseId();
+            Optional<Courses> optionalCourses = coursesDao.findById(Id);
+            if (optionalCourses.isPresent()) {
+                Courses newCourse = optionalCourses.get();
+                cT.setCourse(newCourse);
+                return this.coursesTaughtDao.save(cT);
+            } else {
+                throw new WrongIdException("Course with ID " + courseId + " doesn't exist.");
+            }
+
+        } else {
+            throw new WrongIdException("CourseTaught with professorId " + professorId + " and courseId " + courseId + " doesn't exist.");
+
         }
     }
 }

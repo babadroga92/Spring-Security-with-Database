@@ -1,7 +1,9 @@
 package com.school.SpringSecuritywithDatabase.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.school.SpringSecuritywithDatabase.enums.Grade;
+import com.school.SpringSecuritywithDatabase.view.View;
 
 import javax.persistence.*;
 
@@ -10,16 +12,19 @@ import javax.persistence.*;
 public class CoursesTaken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(View.ShowMinimal.class)
     private int id;
 
     @ManyToOne
     @JoinColumn(name = "student_id")
-    @JsonIgnore
+    //@JsonIgnore   Without this i can create an object CoursesTaken in Postman with all fields included
+    @JsonView(View.ShowMinimal.class)
     private Student student;
 
     @ManyToOne
     @JoinColumn(name = "course_id")
-    @JsonIgnore
+    //@JsonIgnore Without this i can create an object CoursesTaken in Postman with all fields included
+    @JsonView(View.ShowMinimal.class)
     private Courses course;
 
     @Column(name = "grade")
@@ -50,7 +55,6 @@ public class CoursesTaken {
     public void setStudent(Student student) {
         this.student = student;
     }
-
     public Courses getCourse() {
         return course;
     }

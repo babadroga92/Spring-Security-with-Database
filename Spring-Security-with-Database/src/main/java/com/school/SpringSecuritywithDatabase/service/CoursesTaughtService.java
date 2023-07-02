@@ -11,4 +11,5 @@ public interface CoursesTaughtService {
 
     CoursesTaught updateCourseId(CoursesTaughtRequest request, int id);
 
+    CoursesTaught updateCourseByProfessor(CoursesTaughtRequest request, int professorId, int courseId);
 }

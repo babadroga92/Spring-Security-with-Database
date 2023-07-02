@@ -1,6 +1,8 @@
 package com.school.SpringSecuritywithDatabase.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.school.SpringSecuritywithDatabase.view.View;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
@@ -10,9 +12,11 @@ import java.util.List;
 @Table(name = "courses")
 public class Courses {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) // Since its AUTO, I don't need this field added in a constructor
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(View.ShowMinimal.class)
     private int id;
     @NonNull
+    @JsonView(View.ShowMinimal.class)
     private String name;
 
     @ManyToMany(mappedBy = "courses")

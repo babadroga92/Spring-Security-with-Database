@@ -17,22 +17,23 @@ public class CoursesTaughtController {
     private CoursesTaughtServiceImpl coursesTaughtServiceImpl;
 
     @PostMapping("/add")
-    public CoursesTaught coursesTaught(@RequestBody CoursesTaught coursesTaught){
+    public CoursesTaught coursesTaught(@RequestBody CoursesTaught coursesTaught)throws WrongIdException{
         return this.coursesTaughtServiceImpl.addCoursesTaught(coursesTaught);
     }
     @GetMapping("/{id}")
     public ResponseEntity<CoursesTaught> findById(@PathVariable int id) throws WrongIdException {
         return new ResponseEntity<>(coursesTaughtServiceImpl.findById(id), HttpStatus.OK);
     }
-    /*
-    @GetMapping("/{id}")
-    public ResponseEntity<Student> findById(@PathVariable int id) throws WrongIdException {
-    return new ResponseEntity<>(studentService.findById(id), HttpStatus.OK);
-    }
-     */
 
     @PutMapping("/update/{id}")
     public CoursesTaught updateCourseId(@PathVariable("id")int id, @RequestBody CoursesTaughtRequest request) throws WrongIdException{
        return coursesTaughtServiceImpl.updateCourseId(request,id);
+    }
+
+    @PutMapping("/update/{professorId}/course/{courseId}")
+    public CoursesTaught updateCourseByProfessor(@PathVariable("professorId")int professorId,
+                                                 @PathVariable("courseId")int courseId,
+                                                 @RequestBody CoursesTaughtRequest request) throws WrongIdException{
+        return coursesTaughtServiceImpl.updateCourseByProfessor(request,professorId, courseId);
     }
     }

@@ -11,6 +11,9 @@ public interface CoursesTakenService {
 
     List<CoursesTaken> findAll();
 
+    CoursesTaken findById(int id);
+    String deleteById(int id);
+
 
 
 

@@ -1,26 +1,16 @@
 package com.school.SpringSecuritywithDatabase.exc;
 
-import org.springframework.http.HttpStatus;
-
 public class ErrorMessage {
 
-    private HttpStatus status;
+
     private String message;
 
     public ErrorMessage() {
     }
 
-    public ErrorMessage(HttpStatus status, String message) {
-        this.status = status;
+    public ErrorMessage( String message) {
+
         this.message = message;
-    }
-
-    public HttpStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(HttpStatus status) {
-        this.status = status;
     }
 
     public String getMessage() {

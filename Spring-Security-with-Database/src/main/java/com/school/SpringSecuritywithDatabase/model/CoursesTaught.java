@@ -16,12 +16,12 @@ public class CoursesTaught {
 
     @ManyToOne
     @JoinColumn(name = "professor_id")
-    @JsonIgnore
+    //@JsonIgnore
     private Professor professor;
 
     @ManyToOne
     @JoinColumn(name = "course_id")
-    @JsonIgnore
+    //@JsonIgnore
     private Courses course;
 
     public CoursesTaught() {

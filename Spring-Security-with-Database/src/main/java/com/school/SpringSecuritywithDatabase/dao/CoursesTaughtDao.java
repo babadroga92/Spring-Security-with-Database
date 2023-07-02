@@ -14,4 +14,6 @@ import java.util.List;
 public interface CoursesTaughtDao extends JpaRepository<CoursesTaught, Integer> {
     @Query("Select c.course from CoursesTaught c where c.professor.id= :professorId")
     List<Courses> findAllCoursesByProfessorId(int professorId);
+    @Query("Select cT from CoursesTaught cT where cT.course.id=:courseId and cT.professor.id=:professorId")
+    CoursesTaught findCourseTaughtByProfessorAndByCourse(int professorId, int courseId);
 }

@@ -1,7 +1,9 @@
 package com.school.SpringSecuritywithDatabase.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.school.SpringSecuritywithDatabase.enums.Grade;
+import com.school.SpringSecuritywithDatabase.view.View;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,8 +14,10 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @JsonView(View.ShowMinimal.class)
     private int id;
     @Column(name = "name")
+    @JsonView(View.ShowMinimal.class)
     private String name;
 
     @ManyToMany

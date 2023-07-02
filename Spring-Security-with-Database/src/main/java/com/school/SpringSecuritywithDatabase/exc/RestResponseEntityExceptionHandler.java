@@ -20,35 +20,35 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler(WrongIdException.class)
     public ResponseEntity<ErrorMessage> wrongIdException(WrongIdException exception, WebRequest request){
-        ErrorMessage message = new ErrorMessage(HttpStatus.NOT_FOUND, exception.getMessage());
+        ErrorMessage message = new ErrorMessage( exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
 
     @ExceptionHandler(ExceededNumberOfAdmins.class)
     public ResponseEntity<ErrorMessage> exceededNumberOfAdmins(ExceededNumberOfAdmins exception, WebRequest request){
-        ErrorMessage message = new ErrorMessage(HttpStatus.UNAUTHORIZED, exception.getMessage());
+        ErrorMessage message = new ErrorMessage( exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
     @ExceptionHandler(DidntAddException.class)
     public ResponseEntity<ErrorMessage> didntAddException(DidntAddException exception, WebRequest request){
-        ErrorMessage message = new ErrorMessage(HttpStatus.NOT_FOUND, exception.getMessage());
+        ErrorMessage message = new ErrorMessage( exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
 
     @ExceptionHandler(NotEnrolled.class)
     public ResponseEntity<ErrorMessage> notEnrolled(NotEnrolled exception, WebRequest request){
-        ErrorMessage message = new ErrorMessage(HttpStatus.NOT_FOUND, exception.getMessage());
+        ErrorMessage message = new ErrorMessage( exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
 
     @ExceptionHandler(PasswordsDoNotMatch.class)
     public ResponseEntity<ErrorMessage> passwordsDoNotMatch(PasswordsDoNotMatch exception, WebRequest request){
-        ErrorMessage message = new ErrorMessage(HttpStatus.NOT_FOUND, exception.getMessage());
+        ErrorMessage message = new ErrorMessage( exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
     @ExceptionHandler(UserWithUsernameAlreadyExists.class)
     public ResponseEntity<ErrorMessage> userWithUsernameAlreadyExists(UserWithUsernameAlreadyExists exception, WebRequest request){
-        ErrorMessage message = new ErrorMessage(HttpStatus.NOT_FOUND, exception.getMessage());
+        ErrorMessage message = new ErrorMessage(exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
 
@@ -66,7 +66,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
             String message = error.getDefaultMessage();
             errors.put(fieldName, message);
         });
-        ErrorMessage message = new ErrorMessage(HttpStatus.BAD_REQUEST, errors.toString());
+        ErrorMessage message = new ErrorMessage( errors.toString());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
 }
