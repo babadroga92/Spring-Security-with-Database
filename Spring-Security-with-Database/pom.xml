@@ -38,6 +38,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 		<version>2.18.0</version>
 	</dependency>
 	<dependency>
+		<groupId>org.junit.jupiter</groupId>
+		<artifactId>junit-jupiter-engine</artifactId>
+		<version>5.6.2</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
 		<groupId>org.junit.platform</groupId>
 		<artifactId>junit-platform-runner</artifactId>
 		<version>1.2.0</version>

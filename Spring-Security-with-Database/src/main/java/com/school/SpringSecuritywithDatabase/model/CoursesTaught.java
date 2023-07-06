@@ -2,8 +2,6 @@ package com.school.SpringSecuritywithDatabase.model;
 
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 @Entity
@@ -22,12 +20,12 @@ public class CoursesTaught {
     @ManyToOne
     @JoinColumn(name = "course_id")
     //@JsonIgnore
-    private Courses course;
+    private Course course;
 
     public CoursesTaught() {
     }
 
-    public CoursesTaught(Professor professor, Courses course) {
+    public CoursesTaught(Professor professor, Course course) {
         this.professor = professor;
         this.course = course;
     }
@@ -48,11 +46,11 @@ public class CoursesTaught {
         this.professor = professor;
     }
 
-    public Courses getCourse() {
+    public Course getCourse() {
         return course;
     }
 
-    public void setCourse(Courses course) {
+    public void setCourse(Course course) {
         this.course = course;
     }
 }

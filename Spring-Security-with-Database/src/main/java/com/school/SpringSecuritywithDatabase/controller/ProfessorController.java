@@ -1,8 +1,10 @@
 package com.school.SpringSecuritywithDatabase.controller;
-
-import com.school.SpringSecuritywithDatabase.model.Courses;
+import com.school.SpringSecuritywithDatabase.exc.WrongIdException;
+import com.school.SpringSecuritywithDatabase.model.Course;
 import com.school.SpringSecuritywithDatabase.model.Professor;
 import com.school.SpringSecuritywithDatabase.service.ProfessorServiceImpl;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,7 +25,12 @@ public class ProfessorController {
         return "Professor added";
     }
     @GetMapping("/{id}/listOfCourses")
-    public List<Courses> findAllCoursesByProfessorId(@PathVariable int id){
+    public List<Course> findAllCoursesByProfessorId(@PathVariable int id){
         return professorServiceImpl.findAllCoursesByProfessorId(id);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Professor> findById(@PathVariable int id) throws WrongIdException {
+        return new ResponseEntity<>(professorServiceImpl.findById(id), HttpStatus.OK);
     }
 }

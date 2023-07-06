@@ -1,6 +1,5 @@
 package com.school.SpringSecuritywithDatabase.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.school.SpringSecuritywithDatabase.enums.Grade;
 import com.school.SpringSecuritywithDatabase.view.View;
@@ -25,7 +24,7 @@ public class CoursesTaken {
     @JoinColumn(name = "course_id")
     //@JsonIgnore Without this i can create an object CoursesTaken in Postman with all fields included
     @JsonView(View.ShowMinimal.class)
-    private Courses course;
+    private Course course;
 
     @Column(name = "grade")
     @Enumerated(EnumType.STRING)
@@ -34,7 +33,7 @@ public class CoursesTaken {
     public CoursesTaken() {
     }
 
-    public CoursesTaken(Student student, Courses course, Grade grade) {
+    public CoursesTaken(Student student, Course course, Grade grade) {
         this.student = student;
         this.course = course;
         this.grade = grade;
@@ -55,11 +54,11 @@ public class CoursesTaken {
     public void setStudent(Student student) {
         this.student = student;
     }
-    public Courses getCourse() {
+    public Course getCourse() {
         return course;
     }
 
-    public void setCourse(Courses course) {
+    public void setCourse(Course course) {
         this.course = course;
     }
 

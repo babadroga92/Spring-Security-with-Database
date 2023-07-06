@@ -22,15 +22,15 @@ public class Professor {
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
     @JsonIgnore
-    private List<Courses> courses;
+    private List<Course> course;
 
     public Professor() {
     }
 
-    public Professor(String name, User user, List<Courses> courses) {
+    public Professor(String name, User user, List<Course> course) {
         this.name = name;
         this.user = user;
-        this.courses = courses;
+        this.course = course;
     }
 
     public Professor(String name) {
@@ -61,11 +61,11 @@ public class Professor {
         this.user = user;
     }
 
-    public List<Courses> getCourses() {
-        return courses;
+    public List<Course> getCourses() {
+        return course;
     }
 
-    public void setCourses(List<Courses> courses) {
-        this.courses = courses;
+    public void setCourses(List<Course> course) {
+        this.course = course;
     }
 }

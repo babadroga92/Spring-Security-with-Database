@@ -2,7 +2,6 @@ package com.school.SpringSecuritywithDatabase.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.school.SpringSecuritywithDatabase.exc.WrongIdException;
-import com.school.SpringSecuritywithDatabase.model.Courses;
 import com.school.SpringSecuritywithDatabase.model.CoursesTaken;
 
 import com.school.SpringSecuritywithDatabase.service.CoursesTakenServiceImpl;

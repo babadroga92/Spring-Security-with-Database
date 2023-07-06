@@ -45,6 +45,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (psswd == null && secondPsswd == null) {
             throw new DidntAddException("you need to input both passwords");
         }
+        assert psswd != null;
         if (psswd.equals(secondPsswd)) {
             String encryptedPwd = passwordEncoder.encode(psswd);
             if (encryptedPwd.equals(user.getPassword())) {
@@ -61,7 +62,7 @@ public class CustomUserDetailsService implements UserDetailsService {
       return "finally";
     }
 
-    public String addUser(User user) throws ExceededNumberOfAdmins, UserWithUsernameAlreadyExists{
+    public void addUser(User user) throws ExceededNumberOfAdmins, UserWithUsernameAlreadyExists{
         User userdb = userDao.findByUsername(user.getUsername());
         if(userdb!=null){
 
@@ -76,7 +77,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         String encryptedPwd = passwordEncoder.encode(pwd);
         user.setPassword(encryptedPwd);
         userDao.save(user);
-        return "user saved";
     }
 }
 

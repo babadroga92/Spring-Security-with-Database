@@ -1,11 +1,11 @@
 package com.school.SpringSecuritywithDatabase.service;
 
-import com.school.SpringSecuritywithDatabase.model.Courses;
+import com.school.SpringSecuritywithDatabase.model.Course;
 
 import java.util.List;
 
 public interface CoursesService {
-    Courses addCourse(Courses courses);
-    List<Courses> findAll();
-    Courses findById(int id);
+    Course addCourse(Course course);
+    List<Course> findAll();
+    Course findById(int id);
 }

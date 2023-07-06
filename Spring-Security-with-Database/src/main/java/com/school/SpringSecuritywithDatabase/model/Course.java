@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "courses")
-public class Courses {
+public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonView(View.ShowMinimal.class)
@@ -19,18 +19,18 @@ public class Courses {
     @JsonView(View.ShowMinimal.class)
     private String name;
 
-    @ManyToMany(mappedBy = "courses")
+    @ManyToMany(mappedBy = "course")
     @JsonIgnore
     private List<Student> student;
-    @ManyToMany(mappedBy = "courses")
+    @ManyToMany(mappedBy = "course")
     @JsonIgnore
     private List<Professor> professors;
 
 
-    public Courses() {
+    public Course() {
     }
 
-    public Courses(@NonNull String name, List<Student> student, List<Professor> professors) {
+    public Course(@NonNull String name, List<Student> student, List<Professor> professors) {
 
         this.name = name;
         this.student = student;

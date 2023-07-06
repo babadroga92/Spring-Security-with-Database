@@ -3,12 +3,11 @@ import com.school.SpringSecuritywithDatabase.dao.CoursesDao;
 import com.school.SpringSecuritywithDatabase.dao.CoursesTaughtDao;
 import com.school.SpringSecuritywithDatabase.dao.ProfessorDao;
 import com.school.SpringSecuritywithDatabase.exc.WrongIdException;
-import com.school.SpringSecuritywithDatabase.model.Courses;
+import com.school.SpringSecuritywithDatabase.model.Course;
 import com.school.SpringSecuritywithDatabase.model.CoursesTaught;
 import com.school.SpringSecuritywithDatabase.model.CoursesTaughtRequest;
 import com.school.SpringSecuritywithDatabase.model.Professor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -53,9 +52,9 @@ public class CoursesTaughtServiceImpl implements CoursesTaughtService {
         if (optionalCoursesTaught.isPresent()) {
             CoursesTaught coursesTaught = optionalCoursesTaught.get();
             int courseId = request.getCourseId();
-            Optional<Courses> optionalCourses = coursesDao.findById(courseId);
+            Optional<Course> optionalCourses = coursesDao.findById(courseId);
             if (optionalCourses.isPresent()) {
-                Courses newCourse = optionalCourses.get();
+                Course newCourse = optionalCourses.get();
                 coursesTaught.setCourse(newCourse);
                 return this.coursesTaughtDao.save(coursesTaught);
             } else {
@@ -71,9 +70,9 @@ public class CoursesTaughtServiceImpl implements CoursesTaughtService {
         CoursesTaught cT = coursesTaughtDao.findCourseTaughtByProfessorAndByCourse(professorId, courseId);
         if (cT != null) {
             int Id = request.getCourseId();
-            Optional<Courses> optionalCourses = coursesDao.findById(Id);
+            Optional<Course> optionalCourses = coursesDao.findById(Id);
             if (optionalCourses.isPresent()) {
-                Courses newCourse = optionalCourses.get();
+                Course newCourse = optionalCourses.get();
                 cT.setCourse(newCourse);
                 return this.coursesTaughtDao.save(cT);
             } else {
