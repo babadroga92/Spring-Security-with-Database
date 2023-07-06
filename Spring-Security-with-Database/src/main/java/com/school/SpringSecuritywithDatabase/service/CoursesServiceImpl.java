@@ -2,7 +2,7 @@ package com.school.SpringSecuritywithDatabase.service;
 
 import com.school.SpringSecuritywithDatabase.dao.CoursesDao;
 import com.school.SpringSecuritywithDatabase.exc.WrongIdException;
-import com.school.SpringSecuritywithDatabase.model.Courses;
+import com.school.SpringSecuritywithDatabase.model.Course;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,18 +15,18 @@ public class CoursesServiceImpl implements CoursesService{
     private CoursesDao coursesDao;
 
     @Override
-    public Courses addCourse(Courses courses) {
-        return this.coursesDao.save(courses);
+    public Course addCourse(Course course) {
+        return this.coursesDao.save(course);
     }
 
     @Override
-    public List<Courses> findAll() {
+    public List<Course> findAll() {
         return this.coursesDao.findAll();
     }
 
     @Override
-    public Courses findById(int id) throws WrongIdException {
-        Optional<Courses> optional = this.coursesDao.findById(id);
+    public Course findById(int id) throws WrongIdException {
+        Optional<Course> optional = this.coursesDao.findById(id);
         if(optional.isPresent()){
             return optional.get();
         }

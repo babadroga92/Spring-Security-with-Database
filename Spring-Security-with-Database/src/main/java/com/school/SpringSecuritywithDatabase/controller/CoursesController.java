@@ -1,7 +1,7 @@
 package com.school.SpringSecuritywithDatabase.controller;
 
 import com.school.SpringSecuritywithDatabase.exc.WrongIdException;
-import com.school.SpringSecuritywithDatabase.model.Courses;
+import com.school.SpringSecuritywithDatabase.model.Course;
 import com.school.SpringSecuritywithDatabase.service.CoursesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,16 +17,16 @@ public class CoursesController {
     private CoursesServiceImpl coursesServiceImpl;
 
     @PostMapping("/add")
-    public Courses addCourse(@RequestBody Courses courses){
-        return this.coursesServiceImpl.addCourse(courses);
+    public Course addCourse(@RequestBody Course course){
+        return this.coursesServiceImpl.addCourse(course);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Courses> findById(@PathVariable int id) throws WrongIdException{
+    public ResponseEntity<Course> findById(@PathVariable int id) throws WrongIdException{
         return new ResponseEntity<>(coursesServiceImpl.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    public List<Courses> findAll(){
+    public List<Course> findAll(){
         return this.coursesServiceImpl.findAll();
     }
 

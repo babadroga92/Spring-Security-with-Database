@@ -2,7 +2,6 @@ package com.school.SpringSecuritywithDatabase.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.school.SpringSecuritywithDatabase.enums.Grade;
 import com.school.SpringSecuritywithDatabase.view.View;
 
 import javax.persistence.*;
@@ -27,7 +26,8 @@ public class Student {
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
     @JsonIgnore
-    private List<Courses> courses;
+    @JsonView(View.ShowMinimal.class)
+    private List<Course> course;
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
@@ -36,9 +36,9 @@ public class Student {
     public Student() {
     }
 
-    public Student(String name, List<Courses> courses, User user) {
+    public Student(String name, List<Course> course, User user) {
         this.name = name;
-        this.courses = courses;
+        this.course = course;
         this.user = user;
     }
 
@@ -63,12 +63,12 @@ public class Student {
     }
 
 
-    public List<Courses> getCourses() {
-        return courses;
+    public List<Course> getCourses() {
+        return course;
     }
 
-    public void setCourses(List<Courses> courses) {
-        this.courses = courses;
+    public void setCourses(List<Course> course) {
+        this.course = course;
     }
 
     public User getUser() {

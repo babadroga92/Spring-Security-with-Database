@@ -1,5 +1,5 @@
 package com.school.SpringSecuritywithDatabase.service;
-import com.school.SpringSecuritywithDatabase.model.Courses;
+import com.school.SpringSecuritywithDatabase.model.Course;
 import com.school.SpringSecuritywithDatabase.model.Student;
 
 import java.util.List;
@@ -12,7 +12,9 @@ public interface StudentService {
 
     Student findById(int id);
 
-    List<Courses> findAllCoursesByStudentId(int id);
+    List<Course> findAllCoursesByStudentId(int id);
+
+    Student  updateStudentsName(int id, Student student);
 
 
 }
