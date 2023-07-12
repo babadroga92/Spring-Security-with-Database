@@ -24,9 +24,8 @@ public class StudentController {
     }
 
     @PostMapping
-    public String addStudent(@RequestBody @Valid Student student){
-        studentService.addStudent(student);
-        return "Student added";
+    public ResponseEntity<Student> addStudent(@RequestBody @Valid Student student){
+       return new ResponseEntity<>(studentService.addStudent(student), HttpStatus.OK);
     }
 
     @GetMapping("/list")
@@ -36,8 +35,7 @@ public class StudentController {
 
     @DeleteMapping("/{id}")
     public String deleteStudent(@PathVariable int id){
-        studentService.deleteById(id);
-        return "student with id: " + id + " deleted";
+        return studentService.deleteById(id);
     }
 
     @GetMapping("/{id}")
