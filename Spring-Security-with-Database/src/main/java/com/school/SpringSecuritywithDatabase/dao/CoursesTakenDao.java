@@ -1,6 +1,9 @@
 package com.school.SpringSecuritywithDatabase.dao;
+import com.school.SpringSecuritywithDatabase.dto.CourseDTO;
+import com.school.SpringSecuritywithDatabase.enums.Grade;
 import com.school.SpringSecuritywithDatabase.model.Course;
 import com.school.SpringSecuritywithDatabase.model.CoursesTaken;
+import com.school.SpringSecuritywithDatabase.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -13,5 +16,18 @@ public interface CoursesTakenDao extends JpaRepository<CoursesTaken, Integer> {
 
     @Query("Select c.course from CoursesTaken c where c.student.id= :studentId")
     List<Course> findAllCoursesByStudentId(int studentId);
+
+    @Query("Select ct.course.name from CoursesTaken ct where ct.student.name = :name")
+    List<String> findAllCoursesByStudentName(String name);
+
+    @Query("Select new com.school.SpringSecuritywithDatabase.dto.CourseDTO" +
+            "(ct.course.name, ct.grade) from CoursesTaken ct where ct.student.name = :name")
+    List<CourseDTO> findAllCoursesByStudentNameDto(String name);
+
+    @Query("Select count(distinct ct.student.id) from CoursesTaken ct where ct.course.name = :name")
+    Integer findNumberOfCourseTakenByStudents(String name);
+
+    @Query("Select ct.student from CoursesTaken ct where ct.grade =:grade and ct.course.name =:course")
+    List<Student> findAllStudents(Grade grade, String course);
 
 }

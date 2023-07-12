@@ -1,9 +1,13 @@
 package com.school.SpringSecuritywithDatabase.service;
 
 import com.school.SpringSecuritywithDatabase.dao.CoursesTakenDao;
+import com.school.SpringSecuritywithDatabase.dto.CourseDTO;
+import com.school.SpringSecuritywithDatabase.enums.Grade;
 import com.school.SpringSecuritywithDatabase.exc.WrongIdException;
 import com.school.SpringSecuritywithDatabase.model.CoursesTaken;
+import com.school.SpringSecuritywithDatabase.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,5 +50,31 @@ public class CoursesTakenServiceImpl implements CoursesTakenService {
         } else {
             throw new WrongIdException("CourseTaken with id " + id + " doesn't exist");
         }
+    }
+
+    @Override
+    public List<String> findAllCoursesByStudentName(String name) {
+        if (name == null) {
+            throw new UsernameNotFoundException("Student not found");
+        }
+            return this.coursesTakenDao.findAllCoursesByStudentName(name);
+        }
+
+    @Override
+    public List<CourseDTO> findAllCoursesByStudentNameDto(String name) {
+        return this.coursesTakenDao.findAllCoursesByStudentNameDto(name);
+    }
+
+    @Override
+    public Integer findNumberOfCourseTakenByStudents(String name) {
+        if (name == null) {
+            throw new UsernameNotFoundException("Subject not found");
+        }
+        return this.coursesTakenDao.findNumberOfCourseTakenByStudents(name);
+    }
+
+    @Override
+    public List<Student> findAllStudents(Grade grade, String course) {
+        return this.coursesTakenDao.findAllStudents(grade, course);
     }
 }

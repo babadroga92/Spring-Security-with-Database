@@ -1,6 +1,7 @@
 package com.school.SpringSecuritywithDatabase.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.school.SpringSecuritywithDatabase.model.Student;
 import com.school.SpringSecuritywithDatabase.service.StudentServiceImpl;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -61,6 +63,16 @@ class StudentControllerMockitoTest {
                 .andReturn();
         Student s1 = objectMapper.readValue(r.getResponse().getContentAsByteArray(), Student.class);
         assertEquals(this.student.getName(), s1.getName());
+    }
+
+    @Test
+    @WithAnonymousUser
+    void addStudentWithoutUser() throws Exception {
+        when(studentServiceImpl.addStudent(any())).thenReturn(this.student);
+        mockMvc.perform(post("/student")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(student)))
+                        .andExpect(status().isUnauthorized());
     }
 
     @Test
