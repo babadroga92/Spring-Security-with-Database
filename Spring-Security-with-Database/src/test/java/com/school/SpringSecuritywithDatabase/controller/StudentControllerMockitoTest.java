@@ -1,8 +1,8 @@
 package com.school.SpringSecuritywithDatabase.controller;
 
-
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.school.SpringSecuritywithDatabase.model.Course;
 import com.school.SpringSecuritywithDatabase.model.Student;
 import com.school.SpringSecuritywithDatabase.service.StudentServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,7 +50,8 @@ class StudentControllerMockitoTest {
 
     @BeforeEach
     void setUp() {
-        this.student = new Student("Nina Jojic", null, null);
+
+        this.student = new Student("Nina Jojic",null, null);
     }
 
     @Test
@@ -113,8 +114,22 @@ class StudentControllerMockitoTest {
     }
 
 
+
     @Test
-    void findAllCoursesByStudentId() {
+    @WithMockUser(roles = "STUDENT")
+    void findAllCoursesByStudentId() throws Exception {
+        List<Course> courseList = new ArrayList<>();
+        courseList.add(new Course("Matematika", null, null));
+        courseList.add(new Course("Programiranje", null, null));
+        when(studentServiceImpl.findAllCoursesByStudentId(anyInt())).thenReturn(courseList);
+        MvcResult r = mockMvc.perform(get("/student/{id}/listOfCourses", anyInt()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value(courseList.get(0).getName())).andReturn();
+        List<Course> objectMapperList = objectMapper.readValue(r.getResponse().getContentAsByteArray(), new TypeReference<>() {
+        });
+        assertNotNull(objectMapperList);
+        assertEquals(courseList.size(), objectMapperList.size());
+        assertEquals(courseList.get(0).getName(), objectMapperList.get(0).getName());
     }
 
     @Test

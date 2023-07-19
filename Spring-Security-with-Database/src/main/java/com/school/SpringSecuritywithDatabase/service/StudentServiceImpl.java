@@ -7,14 +7,20 @@ import com.school.SpringSecuritywithDatabase.exc.WrongIdException;
 import com.school.SpringSecuritywithDatabase.model.Course;
 
 import com.school.SpringSecuritywithDatabase.model.Student;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class StudentServiceImpl implements StudentService{
+
+    private final Logger logger = (Logger) LoggerFactory.getLogger(this.getClass());
 
     private StudentDao studentDao;
     private CoursesTakenDao coursesTakenDao;
@@ -76,6 +82,18 @@ public class StudentServiceImpl implements StudentService{
         studentDb.setName(student.getName());
         return studentDao.save(studentDb);
     }
-
-
+//    @PostConstruct // starting the method when app starts, to enable this needed another @ in main class
+    @Override
+    public void findAllStudentsTWithoutUserId() {
+        List<Student> studentsWithoutUser = studentDao.findAllStudentsTWithoutUserId();
+        logger.info("Start of the process of eliminating all the students without associated user.");
+        studentDao.deleteAll(studentsWithoutUser);
+    }
+    @Scheduled(cron = "${student-deletion-cron}")
+    @Override
+    public void findAllStudentsTWithoutUserIdCustomScheduling() {
+        List<Student> studentsWithoutUser = studentDao.findAllStudentsTWithoutUserId();
+        logger.info("Start of the process of eliminating all the students without associated user.");
+        studentDao.deleteAll(studentsWithoutUser);
+    }
 }

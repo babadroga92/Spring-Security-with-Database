@@ -2,8 +2,10 @@ package com.school.SpringSecuritywithDatabase.service;
 
 import com.school.SpringSecuritywithDatabase.dao.CoursesTakenDao;
 import com.school.SpringSecuritywithDatabase.dto.CourseDTO;
+import com.school.SpringSecuritywithDatabase.dto.StudentDTO;
 import com.school.SpringSecuritywithDatabase.enums.Grade;
 import com.school.SpringSecuritywithDatabase.exc.WrongIdException;
+import com.school.SpringSecuritywithDatabase.model.Course;
 import com.school.SpringSecuritywithDatabase.model.CoursesTaken;
 import com.school.SpringSecuritywithDatabase.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +76,7 @@ public class CoursesTakenServiceImpl implements CoursesTakenService {
     }
 
     @Override
-    public List<Student> findAllStudents(Grade grade, String course) {
+    public List<StudentDTO> findAllStudents(Grade grade, String course) {
         return this.coursesTakenDao.findAllStudents(grade, course);
     }
 }

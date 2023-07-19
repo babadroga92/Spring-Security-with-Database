@@ -17,40 +17,40 @@ import java.util.List;
 @RestController
 @RequestMapping("/student")
 public class StudentController {
-    private StudentServiceImpl studentService;
+    private StudentServiceImpl studentServiceImpl;
     @Autowired
-    public StudentController(StudentServiceImpl studentService) {
-        this.studentService = studentService;
+    public StudentController(StudentServiceImpl studentServiceImpl) {
+        this.studentServiceImpl = studentServiceImpl;
     }
 
     @PostMapping
     public ResponseEntity<Student> addStudent(@RequestBody @Valid Student student){
-       return new ResponseEntity<>(studentService.addStudent(student), HttpStatus.OK);
+       return new ResponseEntity<>(studentServiceImpl.addStudent(student), HttpStatus.OK);
     }
 
     @GetMapping("/list")
     public List<Student> findAll(){
-        return this.studentService.findAll();
+        return this.studentServiceImpl.findAll();
     }
 
     @DeleteMapping("/{id}")
     public String deleteStudent(@PathVariable int id){
-        return studentService.deleteById(id);
+        return studentServiceImpl.deleteById(id);
     }
 
     @GetMapping("/{id}")
     @JsonView(View.ShowMinimal.class)
     public ResponseEntity<Student> findById(@PathVariable int id) throws WrongIdException {
-    return new ResponseEntity<>(studentService.findById(id), HttpStatus.OK);
+    return new ResponseEntity<>(studentServiceImpl.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/{id}/listOfCourses")
     public List<Course> findAllCoursesByStudentId(@PathVariable int id){
-        return studentService.findAllCoursesByStudentId(id);
+        return studentServiceImpl.findAllCoursesByStudentId(id);
     }
 
     @PutMapping("/{id}/update")
     public Student updateStudentsName(@PathVariable int id, @RequestBody Student student){
-        return  studentService.updateStudentsName(id,student);
+        return  studentServiceImpl.updateStudentsName(id,student);
     }
 }

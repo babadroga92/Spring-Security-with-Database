@@ -16,5 +16,9 @@ public interface StudentService {
 
     Student  updateStudentsName(int id, Student student);
 
+    void findAllStudentsTWithoutUserId();
+
+    void findAllStudentsTWithoutUserIdCustomScheduling();
+
 
 }

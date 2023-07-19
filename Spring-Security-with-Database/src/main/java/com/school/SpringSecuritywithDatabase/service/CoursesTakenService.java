@@ -1,6 +1,7 @@
 package com.school.SpringSecuritywithDatabase.service;
 
 import com.school.SpringSecuritywithDatabase.dto.CourseDTO;
+import com.school.SpringSecuritywithDatabase.dto.StudentDTO;
 import com.school.SpringSecuritywithDatabase.enums.Grade;
 import com.school.SpringSecuritywithDatabase.model.CoursesTaken;
 import com.school.SpringSecuritywithDatabase.model.Student;
@@ -23,7 +24,7 @@ public interface CoursesTakenService {
 
     Integer findNumberOfCourseTakenByStudents(String name);
 
-    List<Student> findAllStudents(Grade grade, String course);
+    List<StudentDTO> findAllStudents(Grade grade, String course);
 
 
 

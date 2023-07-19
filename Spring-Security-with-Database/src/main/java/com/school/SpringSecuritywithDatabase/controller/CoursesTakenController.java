@@ -2,15 +2,13 @@ package com.school.SpringSecuritywithDatabase.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.school.SpringSecuritywithDatabase.dto.CourseDTO;
+import com.school.SpringSecuritywithDatabase.dto.StudentDTO;
 import com.school.SpringSecuritywithDatabase.enums.Grade;
 import com.school.SpringSecuritywithDatabase.exc.WrongIdException;
 import com.school.SpringSecuritywithDatabase.model.CoursesTaken;
-
-import com.school.SpringSecuritywithDatabase.model.Student;
 import com.school.SpringSecuritywithDatabase.service.CoursesTakenServiceImpl;
 import com.school.SpringSecuritywithDatabase.view.View;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -59,8 +57,8 @@ public class CoursesTakenController {
         return coursesTakenServiceImpl.findNumberOfCourseTakenByStudents(name);
     }
     @GetMapping("/findStudents")
-    public List<Student> findAllStudents(@RequestParam(value = "grade")Grade grade,
-                                         @RequestParam(value = "course") String course){
+    public List<StudentDTO> findAllStudents(@RequestParam(value = "grade")Grade grade,
+                                            @RequestParam(value = "course") String course){
         return coursesTakenServiceImpl.findAllStudents(grade, course);
     }
 }

@@ -8,11 +8,11 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 	<version>2.7.4</version>
 	<relativePath/> <!-- lookup parent from repository -->
 </parent>
-<groupId>com.deliverybusiness</groupId>
-<artifactId>DeliveryBusiness</artifactId>
+<groupId>com.springsecuritywithdatabaase</groupId>
+<artifactId>SpringSecurityWithDatabaase</artifactId>
 <version>0.0.1-SNAPSHOT</version>
-<name>DeliveryBusiness</name>
-<description>Blueprint for delivery business</description>
+<name>SpringSecurityWithDatabaase</name>
+<description>Blueprint for SpringSecurityWithDatabaase</description>
 <properties>
 	<java.version>17</java.version>
 </properties>
@@ -48,6 +48,11 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/x
 		<artifactId>junit-platform-runner</artifactId>
 		<version>1.2.0</version>
 		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.logging.log4j</groupId>
+		<artifactId>log4j-api</artifactId>
+		<version>2.18.0</version>
 	</dependency>
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
