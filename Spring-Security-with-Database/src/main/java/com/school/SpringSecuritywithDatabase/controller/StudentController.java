@@ -29,6 +29,7 @@ public class StudentController {
     }
 
     @GetMapping("/list")
+    @JsonView(View.ShowMinimal.class)
     public List<Student> findAll(){
         return this.studentServiceImpl.findAll();
     }

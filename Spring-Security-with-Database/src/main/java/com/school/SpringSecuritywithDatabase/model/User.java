@@ -17,7 +17,6 @@ public  class User {
     @Enumerated(EnumType.STRING)
     private Roles roles;
 
-
     public User() {
     }
 
@@ -27,7 +26,6 @@ public  class User {
         this.password = password;
         this.email = email;
         this.roles = roles;
-
     }
 
     public int getId() {

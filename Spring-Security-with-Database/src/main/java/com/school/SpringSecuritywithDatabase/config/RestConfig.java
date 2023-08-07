@@ -6,16 +6,16 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class RestConfig {
-    public static final String USER_REST_TEMPLATE = "userRestTemplate";
+    public static final String USER_REST_TEMPLATE_GET = "userGetRestTemplate";
 
-    public static final String DB_BUSINESS = "dbBusiness";
+    public static final String USER_REST_TEMPLATE_POST = "userPostRestTemplate";
 
-    @Bean(name =USER_REST_TEMPLATE)
-    public RestTemplate restTemplate(){
+    @Bean(name = USER_REST_TEMPLATE_GET)
+    public RestTemplate restGetTemplate(){
         return new RestTemplate();
     }
-    @Bean(name =DB_BUSINESS)
-    public RestTemplate restTemplateDB(){
+    @Bean(name = USER_REST_TEMPLATE_POST)
+    public RestTemplate restPostTemplate(){
         return new RestTemplate();
     }
 }

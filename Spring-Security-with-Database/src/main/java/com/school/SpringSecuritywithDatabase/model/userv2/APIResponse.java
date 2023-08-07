@@ -19,4 +19,5 @@ public class APIResponse {
     public void setResults(List<UserAPI> results) {
         this.results = results;
     }
+
 }
