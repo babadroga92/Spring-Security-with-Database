@@ -32,12 +32,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/user/**", "/userApi/**").permitAll()
                 .antMatchers("/coursesTaken/**").permitAll()
+                .antMatchers("/admin/**").permitAll()
+                .antMatchers("/registration/**", "/success/**").permitAll()
                 .antMatchers("/student/**").hasRole("STUDENT")
                 .antMatchers("/courses/**").hasRole("PROFESSOR")
                 .antMatchers("/professor/**", "/coursesTaught/**").hasRole("PROFESSOR")
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic();
+                .formLogin().loginPage("/login").permitAll();
     }
     @Bean
     public BCryptPasswordEncoder encodePwd(){

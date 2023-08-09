@@ -82,7 +82,6 @@ public class StudentServiceImpl implements StudentService{
         studentDb.setName(student.getName());
         return studentDao.save(studentDb);
     }
-//    @PostConstruct // starting the method when app starts, to enable this needed another @ in main class
     @Override
     public void findAllStudentsTWithoutUserId() {
         List<Student> studentsWithoutUser = studentDao.findAllStudentsTWithoutUserId();

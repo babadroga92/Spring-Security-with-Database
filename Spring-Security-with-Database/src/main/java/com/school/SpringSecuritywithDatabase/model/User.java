@@ -17,15 +17,19 @@ public  class User {
     @Enumerated(EnumType.STRING)
     private Roles roles;
 
+    private boolean isEnabled;
+
+
     public User() {
     }
 
-    public User(int id, String username, String password, String email, Roles roles) {
+    public User(int id, String username, String password, String email, Roles roles, boolean isEnabled) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.roles = roles;
+        this.isEnabled = isEnabled;
     }
 
     public int getId() {
@@ -68,5 +72,11 @@ public  class User {
         this.roles = roles;
     }
 
+    public boolean isEnabled() {
+        return isEnabled;
+    }
 
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
 }

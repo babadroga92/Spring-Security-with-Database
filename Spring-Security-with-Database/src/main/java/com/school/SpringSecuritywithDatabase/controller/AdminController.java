@@ -18,7 +18,7 @@ public class AdminController {
 
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable int id){
-        userDao.deleteById(id);
-        return "user with id: " + id + " deleted";
+        return customUserDetailsService.deleteById(id);
+
     }
 }
