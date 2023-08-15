@@ -1,31 +1,119 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Register User</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h2>Register</h2>-->
+<!--<form th:action="@{/registration}" method="post">-->
+<!--    <div>-->
+<!--        <label for="username">Username:</label>-->
+<!--        <input type="text" id="username" name="username" required>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <label for="password">Password:</label>-->
+<!--        <input type="password" id="password" name="password" required>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <label for="email">email:</label>-->
+<!--        <input type="email" id="email" name="email" required>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <label for="roles">roles:</label>-->
+<!--        <input type="roles" id="roles" name="roles" required>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <button type="submit">Save</button>-->
+<!--    </div>-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Register User</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .registration-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            width: 300px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #1e7e34;
+        }
+    </style>
 </head>
 <body>
-<h2>Register</h2>
-<form th:action="@{/registration}" method="post">
-    <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-    </div>
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-    </div>
-    <div>
-        <label for="email">email:</label>
-        <input type="email" id="email" name="email" required>
-    </div>
-    <div>
-        <label for="roles">roles:</label>
-        <input type="roles" id="roles" name="roles" required>
-    </div>
-    <div>
-        <button type="submit">Save</button>
-    </div>
-</form>
+<div class="registration-container">
+    <h2>Register</h2>
+    <form th:action="@{/registration}" method="post">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="roles">Roles:</label>
+            <input type="text" id="roles" name="roles" required>
+        </div>
+        <div>
+            <button type="submit">Save</button>
+        </div>
+    </form>
+</div>
 </body>
 </html>
+

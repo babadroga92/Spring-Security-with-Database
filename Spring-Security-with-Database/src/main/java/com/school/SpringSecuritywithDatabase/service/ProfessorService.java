@@ -6,7 +6,7 @@ import com.school.SpringSecuritywithDatabase.model.Professor;
 import java.util.List;
 
 public interface ProfessorService {
-    Professor addProfessor(Professor professor);
+    void addProfessor(Professor professor);
 
     Professor findById(int id);
 

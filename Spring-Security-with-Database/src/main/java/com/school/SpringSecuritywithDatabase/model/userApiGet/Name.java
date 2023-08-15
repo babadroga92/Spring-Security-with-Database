@@ -1,4 +1,4 @@
-package com.school.SpringSecuritywithDatabase.model.userv2;
+package com.school.SpringSecuritywithDatabase.model.userApiGet;
 
 public class Name {
 

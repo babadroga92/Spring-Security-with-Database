@@ -1,13 +1,11 @@
-package com.school.SpringSecuritywithDatabase.model.userv2;
+package com.school.SpringSecuritywithDatabase.model.userApiGet;
 
 public class UserAPI {
-    private int id;
 
     private String gender;
     private Name name;
 
-    public UserAPI(int id, String gender, Name name) {
-        this.id = id;
+    public UserAPI( String gender, Name name) {
         this.gender = gender;
         this.name = name;
     }
@@ -31,11 +29,4 @@ public class UserAPI {
         this.name = name;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 }

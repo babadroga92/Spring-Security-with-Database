@@ -1,6 +1,8 @@
 package com.school.SpringSecuritywithDatabase.service;
 
+import com.school.SpringSecuritywithDatabase.dao.CourseDao;
 import com.school.SpringSecuritywithDatabase.dao.CoursesTakenDao;
+import com.school.SpringSecuritywithDatabase.dao.ProfessorDao;
 import com.school.SpringSecuritywithDatabase.dao.StudentDao;
 import com.school.SpringSecuritywithDatabase.model.Course;
 import com.school.SpringSecuritywithDatabase.model.Student;
@@ -27,6 +29,10 @@ class StudentServiceImplMockitoTest {
     private StudentDao studentDao;
     private CoursesTakenDao coursesTakenDao;
     private StudentServiceImpl studentServiceImpl;
+
+    private ProfessorDao professorDao;
+
+    private CourseDao courseDao;
     private Student student;
 
     private Course course;
@@ -35,7 +41,7 @@ class StudentServiceImplMockitoTest {
     void setUp() {
         studentDao = Mockito.mock(StudentDao.class);
         coursesTakenDao = Mockito.mock(CoursesTakenDao.class);
-        studentServiceImpl = new StudentServiceImpl(studentDao,coursesTakenDao);
+        studentServiceImpl = new StudentServiceImpl(studentDao,coursesTakenDao, professorDao, courseDao);
         this.course = new Course("Matematika", null, null);
         List<Course> courseList = new ArrayList<>();
         courseList.add(course);

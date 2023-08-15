@@ -1,6 +1,7 @@
-package com.school.SpringSecuritywithDatabase.model.userv2;
+package com.school.SpringSecuritywithDatabase.model.userApiGet;
 
 import com.school.SpringSecuritywithDatabase.exc.WrongIdException;
+import com.school.SpringSecuritywithDatabase.model.userApiPost.UserApiPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
@@ -40,12 +41,12 @@ public class UserAPIService {
         }
     }
 
-    public UserAPI addUser(UserAPI userAPI)throws WrongIdException{
+    public UserApiPost addUser(UserApiPost userApiPost)throws WrongIdException{
         HttpHeaders httpHeaders = new HttpHeaders();//format podataka ce biti json
         httpHeaders.setContentType(MediaType.APPLICATION_JSON); // ovde setujemo tip podataka
-        HttpEntity<UserAPI> user = new HttpEntity<>(userAPI, httpHeaders); //treci parametar u response entiti metodi
-        ResponseEntity<UserAPI> response = restPostTemplate
-                .exchange(EXTERNAL_API_POST, HttpMethod.POST, user, UserAPI.class); // ovo je kao send dugme
+        HttpEntity<UserApiPost> user = new HttpEntity<>(userApiPost, httpHeaders); //treci parametar u response entiti metodi
+        ResponseEntity<UserApiPost> response = restPostTemplate
+                .exchange(EXTERNAL_API_POST, HttpMethod.POST, user, UserApiPost.class); // ovo je kao send dugme
         if(response.getStatusCode() == HttpStatus.CREATED){
             return response.getBody(); //ako taj user postoji nakon "send", json telo se vrati
         }else {

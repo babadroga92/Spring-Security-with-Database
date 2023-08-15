@@ -3,6 +3,7 @@ package com.school.SpringSecuritywithDatabase.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.school.SpringSecuritywithDatabase.exc.WrongIdException;
 import com.school.SpringSecuritywithDatabase.model.Course;
+import com.school.SpringSecuritywithDatabase.model.CoursesTaken;
 import com.school.SpringSecuritywithDatabase.model.Student;
 import com.school.SpringSecuritywithDatabase.service.StudentServiceImpl;
 import com.school.SpringSecuritywithDatabase.view.View;
@@ -28,12 +29,6 @@ public class StudentController {
        return new ResponseEntity<>(studentServiceImpl.addStudent(student), HttpStatus.OK);
     }
 
-    @GetMapping("/list")
-    @JsonView(View.ShowMinimal.class)
-    public List<Student> findAll(){
-        return this.studentServiceImpl.findAll();
-    }
-
     @DeleteMapping("/{id}")
     public String deleteStudent(@PathVariable int id){
         return studentServiceImpl.deleteById(id);
@@ -53,5 +48,10 @@ public class StudentController {
     @PutMapping("/{id}/update")
     public Student updateStudentsName(@PathVariable int id, @RequestBody Student student){
         return  studentServiceImpl.updateStudentsName(id,student);
+    }
+
+    @GetMapping("/{studentId}/{professorId}/courses")
+    public List<String> findByStudentAndProfessor(@PathVariable int studentId, @PathVariable int professorId){
+        return studentServiceImpl.findByStudentAndProfessor(studentId,professorId);
     }
 }

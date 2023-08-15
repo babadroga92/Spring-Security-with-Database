@@ -1,4 +1,4 @@
-package com.school.SpringSecuritywithDatabase.model.userv2;
+package com.school.SpringSecuritywithDatabase.model.userApiGet;
 
 import java.util.List;
 

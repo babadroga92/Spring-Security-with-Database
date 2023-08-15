@@ -7,11 +7,13 @@ import com.school.SpringSecuritywithDatabase.exc.*;
 import com.school.SpringSecuritywithDatabase.model.CustomUserDetails;
 import com.school.SpringSecuritywithDatabase.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 import java.util.Optional;
 
@@ -26,6 +28,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     private BCryptPasswordEncoder passwordEncoder;
     @Autowired
     private EmailService emailService;
+
+    public CustomUserDetailsService(UserDao userDao, BCryptPasswordEncoder passwordEncoder, EmailService emailService) {
+        this.userDao = userDao;
+        this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
+    }
+
+    public CustomUserDetailsService() {
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

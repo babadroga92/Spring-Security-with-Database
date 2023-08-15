@@ -1,11 +1,16 @@
 package com.school.SpringSecuritywithDatabase.service;
 
+import com.school.SpringSecuritywithDatabase.dao.CourseDao;
 import com.school.SpringSecuritywithDatabase.dao.CoursesTakenDao;
+import com.school.SpringSecuritywithDatabase.dao.ProfessorDao;
 import com.school.SpringSecuritywithDatabase.dao.StudentDao;
 import com.school.SpringSecuritywithDatabase.exc.NotEnrolled;
 import com.school.SpringSecuritywithDatabase.exc.WrongIdException;
 import com.school.SpringSecuritywithDatabase.model.Course;
 
+import com.school.SpringSecuritywithDatabase.model.CoursesTaken;
+
+import com.school.SpringSecuritywithDatabase.model.Professor;
 import com.school.SpringSecuritywithDatabase.model.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +29,16 @@ public class StudentServiceImpl implements StudentService{
 
     private StudentDao studentDao;
     private CoursesTakenDao coursesTakenDao;
+
+    private ProfessorDao professorDao;
+
+    private CourseDao courseDao;
     @Autowired
-    public StudentServiceImpl(StudentDao studentDao, CoursesTakenDao coursesTakenDao) {
+    public StudentServiceImpl(StudentDao studentDao, CoursesTakenDao coursesTakenDao, ProfessorDao professorDao, CourseDao courseDao) {
         this.studentDao = studentDao;
         this.coursesTakenDao = coursesTakenDao;
+        this.professorDao = professorDao;
+        this.courseDao = courseDao;
     }
 
     @Override
@@ -62,11 +73,10 @@ public class StudentServiceImpl implements StudentService{
     }
 
 
-
     @Override
     public List<Course> findAllCoursesByStudentId(int id)throws NotEnrolled {
         Optional<Student> student = studentDao.findById(id);
-        if (!student.isPresent()) {
+        if (student.isEmpty()) {
             throw new WrongIdException("Student with id " + id + " doesn't exist.");
         }
         List<Course> course = coursesTakenDao.findAllCoursesByStudentId(id);
@@ -74,6 +84,23 @@ public class StudentServiceImpl implements StudentService{
             throw new NotEnrolled("Student with id " + id + " is not enrolled to any class." );
         }
         return course;
+    }
+
+    @Override
+    public List<String> findByStudentAndProfessor(int studentId, int professorId) {
+        Optional<Student> student = studentDao.findById(studentId);
+        if (student.isEmpty()) {
+            throw new WrongIdException("Student with id " + studentId + " doesn't exist.");
+        }
+        Optional<Professor> professor = professorDao.findById(professorId);
+        if (professor.isEmpty()) {
+            throw new WrongIdException("Professor with id " + professorId + " doesn't exist.");
+        }
+        List<String> listOfCourses = coursesTakenDao.findByStudentAndProfessor(studentId, professorId);
+        if(listOfCourses.isEmpty()){
+            throw new NotEnrolled("Student with id " + studentId + " is not enrolled to any class that is being taught by searched professor." );
+        }
+        return listOfCourses;
     }
 
     @Override

@@ -1,5 +1,6 @@
-package com.school.SpringSecuritywithDatabase.model.userv2;
+package com.school.SpringSecuritywithDatabase.model.userApiGet;
 
+import com.school.SpringSecuritywithDatabase.model.userApiPost.UserApiPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public class UserAPIController {
     }
 
     @PostMapping
-    public UserAPI addUser(UserAPI userAPI){
-        return userAPIService.addUser(userAPI);
+    public UserApiPost addUser(UserApiPost userApiPost){
+        return userAPIService.addUser(userApiPost);
     }
 }

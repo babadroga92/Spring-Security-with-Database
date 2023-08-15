@@ -24,8 +24,8 @@ public class ProfessorServiceImpl implements ProfessorService{
     }
 
     @Override
-    public Professor addProfessor(Professor professor) {
-        return this.professorDao.save(professor);
+    public void addProfessor(Professor professor) {
+        this.professorDao.save(professor);
     }
 
     @Override
