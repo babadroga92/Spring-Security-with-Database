@@ -1,5 +1,5 @@
 package com.school.SpringSecuritywithDatabase.service;
-import com.school.SpringSecuritywithDatabase.dao.CoursesDao;
+import com.school.SpringSecuritywithDatabase.dao.CourseDao;
 import com.school.SpringSecuritywithDatabase.dao.CoursesTaughtDao;
 import com.school.SpringSecuritywithDatabase.dao.ProfessorDao;
 import com.school.SpringSecuritywithDatabase.exc.WrongIdException;
@@ -18,7 +18,7 @@ public class CoursesTaughtServiceImpl implements CoursesTaughtService {
     private CoursesTaughtDao coursesTaughtDao;
 
     @Autowired
-    private CoursesDao coursesDao;
+    private CourseDao coursesDao;
 
     @Autowired
     private ProfessorDao professorDao;

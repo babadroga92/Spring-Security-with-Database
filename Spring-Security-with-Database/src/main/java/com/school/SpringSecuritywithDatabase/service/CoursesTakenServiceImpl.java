@@ -21,6 +21,9 @@ public class CoursesTakenServiceImpl implements CoursesTakenService {
     @Autowired
     private CoursesTakenDao coursesTakenDao;
 
+    public CoursesTakenServiceImpl(CoursesTakenDao coursesTakenDao) {
+        this.coursesTakenDao = coursesTakenDao;
+    }
 
     @Override
     public CoursesTaken addCoursesTaken(CoursesTaken coursesTaken) {

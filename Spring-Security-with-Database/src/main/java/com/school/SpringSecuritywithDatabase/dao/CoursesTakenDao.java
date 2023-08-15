@@ -7,6 +7,7 @@ import com.school.SpringSecuritywithDatabase.model.CoursesTaken;
 import com.school.SpringSecuritywithDatabase.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,4 +32,10 @@ public interface CoursesTakenDao extends JpaRepository<CoursesTaken, Integer> {
     @Query("Select new com.school.SpringSecuritywithDatabase.dto.StudentDTO(ct.student.name) from CoursesTaken ct where ct.grade =:grade and ct.course.name =:course")
     List<StudentDTO> findAllStudents(Grade grade, String course);
 
+    @Query("SELECT ct.course.name FROM CoursesTaken ct " +
+            "WHERE ct.student.id = :studentId " +
+            "AND ct.course IN (SELECT ct1.course FROM CoursesTaught ct1 WHERE ct1.professor.id = :professorId)")
+    List<String> findByStudentAndProfessor(
+            @Param("studentId") int studentId,
+            @Param("professorId") int professorId);
 }
