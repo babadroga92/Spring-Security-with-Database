@@ -5,9 +5,13 @@ import com.school.SpringSecuritywithDatabase.email.EmailService;
 import com.school.SpringSecuritywithDatabase.enums.Roles;
 import com.school.SpringSecuritywithDatabase.exc.*;
 import com.school.SpringSecuritywithDatabase.model.CustomUserDetails;
+import com.school.SpringSecuritywithDatabase.model.Student;
 import com.school.SpringSecuritywithDatabase.model.User;
+import com.school.SpringSecuritywithDatabase.model.registration.token.ConfirmationToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,12 +19,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final static String USER_NOT_FOUND_MSG =
+    private final Logger logger = (Logger) LoggerFactory.getLogger(this.getClass());
+    private final static java.lang.String USER_NOT_FOUND_MSG =
             "user with email %s not found";
     @Autowired
     private UserDao userDao;
@@ -28,18 +36,24 @@ public class CustomUserDetailsService implements UserDetailsService {
     private BCryptPasswordEncoder passwordEncoder;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private ConfirmationTokenServiceImpl confirmationTokenServiceImpl;
 
-    public CustomUserDetailsService(UserDao userDao, BCryptPasswordEncoder passwordEncoder, EmailService emailService) {
+    public CustomUserDetailsService(UserDao userDao,
+                                    BCryptPasswordEncoder passwordEncoder,
+                                    EmailService emailService,
+                                    ConfirmationTokenServiceImpl confirmationTokenServiceImpl) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
+        this.confirmationTokenServiceImpl = confirmationTokenServiceImpl;
     }
 
     public CustomUserDetailsService() {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(java.lang.String username) throws UsernameNotFoundException {
        User user =  userDao.findByUsername(username);
         CustomUserDetails userDetails = null;
         if(user !=null){
@@ -50,19 +64,19 @@ public class CustomUserDetailsService implements UserDetailsService {
        }
        return userDetails;
     }
-    public String updatePassword(UserDTO userDTO) {
+    public java.lang.String updatePassword(UserDTO userDTO) {
         User user = userDao.findByUsername(userDTO.getUsername());
         if (user == null) {
             throw new UsernameNotFoundException("User 404");
         }
-        String psswd = userDTO.getPassword();
-        String secondPsswd = userDTO.getRepeatPassword();
+        java.lang.String psswd = userDTO.getPassword();
+        java.lang.String secondPsswd = userDTO.getRepeatPassword();
         if (psswd == null && secondPsswd == null) {
             throw new DidntAddException("you need to input both passwords");
         }
         assert psswd != null;
         if (psswd.equals(secondPsswd)) {
-            String encryptedPwd = passwordEncoder.encode(psswd);
+            java.lang.String encryptedPwd = passwordEncoder.encode(psswd);
             if (encryptedPwd.equals(user.getPassword())) {
                 throw new RuntimeException("Passwords are the same");
             } else {
@@ -77,7 +91,7 @@ public class CustomUserDetailsService implements UserDetailsService {
       return "finally";
     }
 
-    public void addUser(User user) throws ExceededNumberOfAdmins, UserWithUsernameAlreadyExists{
+    public String addUser(User user) throws ExceededNumberOfAdmins, UserWithUsernameAlreadyExists{
         User userdb = userDao.findByUsername(user.getUsername());
         if(userdb!=null){
             throw new UserWithUsernameAlreadyExists("This username already exists");
@@ -90,27 +104,48 @@ public class CustomUserDetailsService implements UserDetailsService {
         String encryptedPwd = passwordEncoder.encode(pwd);
         user.setPassword(encryptedPwd);
         userDao.save(user);
-        emailService.sendAccountCreationNotification(user.getEmail());
+
+        String token = UUID.randomUUID().toString();
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusHours(24),
+                user
+        );
+        confirmationTokenServiceImpl.saveConfirmationToken(
+                confirmationToken
+        );
+        return token;
+    }
+    public int enableUser(java.lang.String email){
+        return userDao.enableUser(email);
     }
 
-    public User findByEmail(String email) {
+    public User findByEmail(java.lang.String email) {
         Optional<User> optional = userDao.findByEmail(email);
         if(optional.isPresent()){
             return optional.get();
         }else {
-          throw new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email));
+          throw new UsernameNotFoundException(java.lang.String.format(USER_NOT_FOUND_MSG, email));
         }
     }
     public String deleteById(int id) throws WrongIdException{
         Optional<User> optional = userDao.findById(id);
         if(optional.isPresent()){
             emailService.sendAccountDeletionNotification(optional.get().getEmail());
-            userDao.deleteById(id);
-            return "user deleted";
+            User user = optional.get();
+            user.setCanBeDeleted(true);
+            userDao.save(user);
+            return "User is scheduled to be deleted in next 24 hours";
         }else {
             throw new WrongIdException("User with " + id + " doesn't exist.");
         }
     }
-
+    @Scheduled(cron = "${user-deletion-cron}")
+    public void deleteAll() {
+        List<User> userList = userDao.findByCanBeDeleted(true);
+        logger.info("Start of the process of eliminating all the students without associated user.");
+        userDao.deleteAll(userList);
+    }
 }
 

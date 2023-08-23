@@ -18,9 +18,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-class CoursesServiceImplTest {
+
+class CoursesServiceImplTest extends AbstractServiceImplTest {
 
     private CourseDao courseDao;
 

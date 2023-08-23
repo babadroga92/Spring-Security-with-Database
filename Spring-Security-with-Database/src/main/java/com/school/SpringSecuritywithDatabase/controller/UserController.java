@@ -22,6 +22,12 @@ public class UserController {
     @Autowired
     private UserDao userDao;
 
+    public UserController(CustomUserDetailsService customUserDetailsService, UserService userService, UserDao userDao) {
+        this.customUserDetailsService = customUserDetailsService;
+        this.userService = userService;
+        this.userDao = userDao;
+    }
+
     @PutMapping("/updatePsswd")
     public String updatePassword(@RequestBody UserDTO userDTO) {
         return this.customUserDetailsService.updatePassword(userDTO);
@@ -31,6 +37,7 @@ public class UserController {
     public User findByEmail(@PathVariable("email") String email){
         return this.customUserDetailsService.findByEmail(email);
     }
+
 
     @GetMapping("/listOfUsersByNumber")
     public List<User> numberOfUsers(@RequestParam int limit){

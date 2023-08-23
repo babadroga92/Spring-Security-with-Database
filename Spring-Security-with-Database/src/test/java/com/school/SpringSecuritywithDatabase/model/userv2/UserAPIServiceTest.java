@@ -6,6 +6,7 @@ import com.school.SpringSecuritywithDatabase.model.userApiGet.UserAPI;
 import com.school.SpringSecuritywithDatabase.model.userApiGet.UserAPIService;
 import com.school.SpringSecuritywithDatabase.model.userApiPost.Address;
 import com.school.SpringSecuritywithDatabase.model.userApiPost.UserApiPost;
+import com.school.SpringSecuritywithDatabase.service.AbstractServiceImplTest;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -23,10 +24,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
-@RunWith(SpringRunner.class)
-@SpringBootTest
-class UserAPIServiceTest {
+class UserAPIServiceTest extends AbstractServiceImplTest {
 
     @Mock
     RestTemplate restTemplate;

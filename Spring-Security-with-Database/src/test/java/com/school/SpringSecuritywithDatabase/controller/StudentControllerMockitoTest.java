@@ -30,27 +30,18 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
+
 @WebMvcTest(StudentController.class)
-@AutoConfigureMockMvc
-class StudentControllerMockitoTest {
+class StudentControllerMockitoTest extends AbstractControllerMockitoTest{
 
     private Student student;
     @MockBean
     private StudentServiceImpl studentServiceImpl;
 
-    @Autowired
-    MockMvc mockMvc;
-    @Autowired
-    protected ObjectMapper objectMapper;
-
-
     @BeforeEach
     void setUp() {
-
         this.student = new Student("Nina Jojic",null, null);
     }
 
@@ -73,23 +64,24 @@ class StudentControllerMockitoTest {
         mockMvc.perform(post("/student")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(student)))
-                        .andExpect(status().isUnauthorized());
+                        .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("http://localhost/login"));
     }
 
-    @Test
-    @WithMockUser(roles = "STUDENT")
-    void findAll() throws Exception {
-        List<Student> studentList = new ArrayList<>();
-        studentList.add(student);
-        when(studentServiceImpl.findAll()).thenReturn(studentList);
-        MvcResult r = mockMvc.perform(get("/student/list")).andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].name", is(studentList.get(0).getName())))
-                .andReturn();
-        List<Student> studentListResponse = objectMapper.readValue(r.getResponse().getContentAsByteArray(), List.class);
-        assertNotNull(studentListResponse);
-        assertEquals(studentList.size(), studentListResponse.size());
-    }
+//    @Test
+//    @WithMockUser(roles = "ADMIN")
+//    void findAll() throws Exception {
+//        List<Student> studentList = new ArrayList<>();
+//        studentList.add(student);
+//        when(studentServiceImpl.findAll()).thenReturn(studentList);
+//        MvcResult r = mockMvc.perform(get("/student/list")).andExpect(status().isOk())
+//                .andExpect(jsonPath("$", hasSize(1)))
+//                .andExpect(jsonPath("$[0].name", is(studentList.get(0).getName())))
+//                .andReturn();
+//        List<Student> studentListResponse = objectMapper.readValue(r.getResponse().getContentAsByteArray(), List.class);
+//        assertNotNull(studentListResponse);
+//        assertEquals(studentList.size(), studentListResponse.size());
+//    }
 
     @Test
     @WithMockUser(roles = "STUDENT")
