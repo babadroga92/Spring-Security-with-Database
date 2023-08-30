@@ -22,6 +22,9 @@ public class CoursesTakenController {
     @Autowired
     private CoursesTakenServiceImpl coursesTakenServiceImpl;
 
+    public CoursesTakenController(CoursesTakenServiceImpl coursesTakenServiceImpl) {
+        this.coursesTakenServiceImpl = coursesTakenServiceImpl;
+    }
 
     @PostMapping("/add")
     public CoursesTaken coursesTaken(@RequestBody CoursesTaken coursesTaken){

@@ -12,21 +12,16 @@ import java.util.List;
 @Component
 @ConditionalOnExpression("${external-api-active:true}")
 public class UserServiceAdapter extends UserService {
-
     private UserAPIService userAPIService;
-
     private UserConverter userConverter;
-
     public UserServiceAdapter(UserDao userDao, UserAPIService userAPIService, UserConverter userConverter) {
         super(userDao);
         this.userAPIService = userAPIService;
         this.userConverter = userConverter;
     }
-
     @Override
     public List<User> numberOfUsers(int limit){
         List<UserAPI> userList = userAPIService.getRandomUsers(limit);
         return userConverter.convert(userList);
     }
-
 }

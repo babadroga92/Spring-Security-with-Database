@@ -16,6 +16,10 @@ public class CoursesTaughtController {
     @Autowired
     private CoursesTaughtServiceImpl coursesTaughtServiceImpl;
 
+    public CoursesTaughtController(CoursesTaughtServiceImpl coursesTaughtServiceImpl) {
+        this.coursesTaughtServiceImpl = coursesTaughtServiceImpl;
+    }
+
     @PostMapping("/add")
     public CoursesTaught coursesTaught(@RequestBody CoursesTaught coursesTaught)throws WrongIdException{
         return this.coursesTaughtServiceImpl.addCoursesTaught(coursesTaught);

@@ -16,6 +16,10 @@ public class CourseController {
     @Autowired
     private CoursesServiceImpl coursesServiceImpl;
 
+    public CourseController(CoursesServiceImpl coursesServiceImpl) {
+        this.coursesServiceImpl = coursesServiceImpl;
+    }
+
     @PostMapping("/add")
     public Course addCourse(@RequestBody Course course){
         return this.coursesServiceImpl.addCourse(course);
