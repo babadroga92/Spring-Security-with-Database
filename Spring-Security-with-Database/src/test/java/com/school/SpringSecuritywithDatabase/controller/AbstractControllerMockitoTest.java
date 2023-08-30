@@ -16,4 +16,5 @@ public abstract class AbstractControllerMockitoTest {
     MockMvc mockMvc;
     @Autowired
     protected ObjectMapper objectMapper;
+
 }

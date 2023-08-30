@@ -40,6 +40,7 @@ class StudentControllerMockitoTest extends AbstractControllerMockitoTest{
     @MockBean
     private StudentServiceImpl studentServiceImpl;
 
+
     @BeforeEach
     void setUp() {
         this.student = new Student("Nina Jojic",null, null);
@@ -67,22 +68,6 @@ class StudentControllerMockitoTest extends AbstractControllerMockitoTest{
                         .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("http://localhost/login"));
     }
-
-//    @Test
-//    @WithMockUser(roles = "ADMIN")
-//    void findAll() throws Exception {
-//        List<Student> studentList = new ArrayList<>();
-//        studentList.add(student);
-//        when(studentServiceImpl.findAll()).thenReturn(studentList);
-//        MvcResult r = mockMvc.perform(get("/student/list")).andExpect(status().isOk())
-//                .andExpect(jsonPath("$", hasSize(1)))
-//                .andExpect(jsonPath("$[0].name", is(studentList.get(0).getName())))
-//                .andReturn();
-//        List<Student> studentListResponse = objectMapper.readValue(r.getResponse().getContentAsByteArray(), List.class);
-//        assertNotNull(studentListResponse);
-//        assertEquals(studentList.size(), studentListResponse.size());
-//    }
-
     @Test
     @WithMockUser(roles = "STUDENT")
     void deleteStudent() throws Exception {

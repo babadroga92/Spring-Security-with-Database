@@ -15,7 +15,9 @@ public class UserConverter {
         if(userAPIList.size() >0){
         for(UserAPI userAPI : userAPIList) {
             User user = new User(); //novi user objekat
-            user.setUsername(userAPI.getName().getFirst()); //za svakog novog usera koristi se for loop od userApiListe i setuje ime
+            if (userAPI.getName() != null) {
+                user.setUsername(userAPI.getName().getFirst()); //za svakog novog usera koristi se for loop od userApiListe i setuje ime
+            }
             userList.add(user); // doda se u listu
         }
         }
@@ -26,6 +28,5 @@ public class UserConverter {
 //                    user.setUsername(userAPI.getName().getFirst());
 //                    return user;
 //                }).collect(Collectors.toList());
-
     }
 }
