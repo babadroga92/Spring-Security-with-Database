@@ -1,9 +1,10 @@
 package com.school.SpringSecuritywithDatabase.controller;
-
-import com.school.SpringSecuritywithDatabase.model.User;
 import com.school.SpringSecuritywithDatabase.model.registration.RegistrationRequest;
 import com.school.SpringSecuritywithDatabase.model.registration.RegistrationService;
+import com.school.SpringSecuritywithDatabase.model.registration.StudentRegistrationRequest;
+import com.school.SpringSecuritywithDatabase.model.registration.StudentRegistrationService;
 import com.school.SpringSecuritywithDatabase.service.CustomUserDetailsService;
+import com.school.SpringSecuritywithDatabase.service.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +17,19 @@ public class RegisterController {
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
+    @Autowired
+    private StudentRegistrationService studentRegistrationService;
+    @Autowired
+    private StudentServiceImpl studentServiceImpl;
 
-    public RegisterController(CustomUserDetailsService customUserDetailsService, RegistrationService registrationService) {
-        this.customUserDetailsService = customUserDetailsService;
+    public RegisterController(RegistrationService registrationService,
+                              CustomUserDetailsService customUserDetailsService,
+                              StudentRegistrationService studentRegistrationService,
+                              StudentServiceImpl studentServiceImpl) {
         this.registrationService = registrationService;
+        this.customUserDetailsService = customUserDetailsService;
+        this.studentRegistrationService = studentRegistrationService;
+        this.studentServiceImpl = studentServiceImpl;
     }
 
     @GetMapping("/registration")
@@ -30,6 +40,16 @@ public class RegisterController {
     @PostMapping("/registration")
     public String addUser(@ModelAttribute("user") RegistrationRequest request) {
         registrationService.register(request);
+        return "redirect:/success";
+    }
+    @GetMapping("/register")
+    public String registering(Model model){
+        model.addAttribute("student", new StudentRegistrationRequest());
+        return "register";
+    }
+    @PostMapping("/register")
+    public String addStudent(@ModelAttribute("student") StudentRegistrationRequest request){
+        studentRegistrationService.register(request);
         return "redirect:/success";
     }
     @GetMapping("/success")

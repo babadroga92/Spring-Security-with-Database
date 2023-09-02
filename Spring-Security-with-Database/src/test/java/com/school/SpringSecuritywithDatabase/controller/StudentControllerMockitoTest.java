@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
-@WebMvcTest(StudentController.class)
+//@WebMvcTest(StudentController.class)
 class StudentControllerMockitoTest extends AbstractControllerMockitoTest{
 
     private Student student;

@@ -1,6 +1,5 @@
 package com.school.SpringSecuritywithDatabase.model;
 
-import antlr.Token;
 import com.school.SpringSecuritywithDatabase.enums.Roles;
 import com.school.SpringSecuritywithDatabase.model.registration.token.ConfirmationToken;
 
@@ -38,7 +37,7 @@ public  class User {
         this.canBeDeleted = canBeDeleted;
     }
 
-    public User(java.lang.String username, java.lang.String password, java.lang.String email, Roles roles) {
+    public User(String username, String password, String email, Roles roles) {
         this.username = username;
         this.password = password;
         this.email = email;

@@ -28,7 +28,7 @@ import java.util.UUID;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final Logger logger = (Logger) LoggerFactory.getLogger(this.getClass());
-    private final static java.lang.String USER_NOT_FOUND_MSG =
+    private final static String USER_NOT_FOUND_MSG =
             "user with email %s not found";
     @Autowired
     private UserDao userDao;
@@ -64,19 +64,19 @@ public class CustomUserDetailsService implements UserDetailsService {
        }
        return userDetails;
     }
-    public java.lang.String updatePassword(UserDTO userDTO) {
+    public String updatePassword(UserDTO userDTO) {
         User user = userDao.findByUsername(userDTO.getUsername());
         if (user == null) {
             throw new UsernameNotFoundException("User 404");
         }
-        java.lang.String psswd = userDTO.getPassword();
-        java.lang.String secondPsswd = userDTO.getRepeatPassword();
+        String psswd = userDTO.getPassword();
+        String secondPsswd = userDTO.getRepeatPassword();
         if (psswd == null && secondPsswd == null) {
             throw new DidntAddException("you need to input both passwords");
         }
         assert psswd != null;
         if (psswd.equals(secondPsswd)) {
-            java.lang.String encryptedPwd = passwordEncoder.encode(psswd);
+            String encryptedPwd = passwordEncoder.encode(psswd);
             if (encryptedPwd.equals(user.getPassword())) {
                 throw new RuntimeException("Passwords are the same");
             } else {
