@@ -1,5 +1,6 @@
 package com.school.SpringSecuritywithDatabase.securityConfig;
 
+import com.school.SpringSecuritywithDatabase.enums.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,17 +31,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/image/**").permitAll()
                 .antMatchers("/api/v*/registration/**").permitAll()
                 .antMatchers("/user/**", "/userApi/**").permitAll()
                 .antMatchers("/coursesTaken/**").permitAll()
                 .antMatchers("/admin/**").permitAll()
                 .antMatchers("/registration/**", "/success/**").permitAll()
-                .antMatchers("/student/**").hasRole("STUDENT")
-                .antMatchers("/courses/**").hasRole("PROFESSOR")
-                .antMatchers("/professor/**", "/coursesTaught/**").hasRole("PROFESSOR")
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().loginPage("/login").permitAll();
+                .antMatchers("/student/**").permitAll()
+                .antMatchers("/courses/**").permitAll()
+                .antMatchers("/professor/**", "/coursesTaught/**").permitAll();
+//                .anyRequest().authenticated()
+//                .and()
+////                .httpBasic();
+//                .formLogin().loginPage("/login").defaultSuccessUrl("/success").permitAll();
+
     }
     @Bean
     public BCryptPasswordEncoder encodePwd(){

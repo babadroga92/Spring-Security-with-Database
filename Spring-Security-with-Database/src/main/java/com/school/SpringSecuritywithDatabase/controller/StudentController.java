@@ -5,11 +5,14 @@ import com.school.SpringSecuritywithDatabase.exc.WrongIdException;
 import com.school.SpringSecuritywithDatabase.model.Course;
 import com.school.SpringSecuritywithDatabase.model.CoursesTaken;
 import com.school.SpringSecuritywithDatabase.model.Student;
+import com.school.SpringSecuritywithDatabase.model.registration.StudentRegistrationRequest;
+import com.school.SpringSecuritywithDatabase.model.registration.StudentRegistrationService;
 import com.school.SpringSecuritywithDatabase.service.StudentServiceImpl;
 import com.school.SpringSecuritywithDatabase.view.View;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,16 +22,16 @@ import java.util.List;
 @RequestMapping("/student")
 public class StudentController {
     private StudentServiceImpl studentServiceImpl;
-    @Autowired
+
+
     public StudentController(StudentServiceImpl studentServiceImpl) {
         this.studentServiceImpl = studentServiceImpl;
     }
 
-    @PostMapping
+    @PostMapping("/registration")
     public ResponseEntity<Student> addStudent(@RequestBody @Valid Student student){
        return new ResponseEntity<>(studentServiceImpl.addStudent(student), HttpStatus.OK);
     }
-
     @DeleteMapping("/{id}")
     public String deleteStudent(@PathVariable int id){
         return studentServiceImpl.deleteById(id);
@@ -53,5 +56,9 @@ public class StudentController {
     @GetMapping("/{studentId}/{professorId}/courses")
     public List<String> findByStudentAndProfessor(@PathVariable int studentId, @PathVariable int professorId){
         return studentServiceImpl.findByStudentAndProfessor(studentId,professorId);
+    }
+    @GetMapping("/success")
+    public String success(){
+        return "success";
     }
 }

@@ -51,6 +51,11 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         ErrorMessage message = new ErrorMessage(exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
+    @ExceptionHandler(ImageDoesntExist.class)
+    public ResponseEntity<ErrorMessage> imageDoesntExist(ImageDoesntExist exception, WebRequest request){
+        ErrorMessage message = new ErrorMessage(exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+    }
 
 
     @Override

@@ -25,14 +25,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 class UserAPIServiceTest extends AbstractServiceImplTest {
-
     @Mock
     RestTemplate restTemplate;
-
     @InjectMocks
     UserAPIService userAPIService;
-
-
     @Test
     void getRandomUsers() {
         UserAPI userAPI = new UserAPI( "b", new Name("n", "m"));
