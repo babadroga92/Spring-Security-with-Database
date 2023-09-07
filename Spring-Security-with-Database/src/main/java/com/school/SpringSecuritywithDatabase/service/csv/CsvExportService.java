@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class CsvExportService {
 
-    @Value("${csv.export.directory}")
+    @Value("${csv.download.directory}")
     private String exportDirectory;
 
     public String exportToCsv(List<?> dataList, String[] headers) {
@@ -40,12 +40,6 @@ public class CsvExportService {
         }
     }
 
-    private String getFilePath(String fileName) {
-        // You can customize the export path here
-        String exportPath = "csv-exports";
-        return exportPath + "/" + fileName;
-    }
-
     private void writeCsvHeader(StringWriter writer, String[] headers) throws IOException {
         writer.append(String.join(",", headers));
         writer.append("\n");
@@ -53,7 +47,6 @@ public class CsvExportService {
 
     private void writeCsvDataRow(StringWriter writer, Object data, String[] headers) throws IOException {
         Course course = (Course) data;
-        // Assuming that data is a Java object with corresponding getter methods for each header
         String[] values = new String[headers.length];
         for (int i = 0; i < headers.length; i++) {
             String header = headers[i];
