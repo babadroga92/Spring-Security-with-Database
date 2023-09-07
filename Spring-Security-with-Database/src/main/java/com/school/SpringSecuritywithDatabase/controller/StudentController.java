@@ -8,57 +8,85 @@ import com.school.SpringSecuritywithDatabase.model.Student;
 import com.school.SpringSecuritywithDatabase.model.registration.StudentRegistrationRequest;
 import com.school.SpringSecuritywithDatabase.model.registration.StudentRegistrationService;
 import com.school.SpringSecuritywithDatabase.service.StudentServiceImpl;
+import com.school.SpringSecuritywithDatabase.service.csv.CsvExportService;
 import com.school.SpringSecuritywithDatabase.view.View;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/student")
 public class StudentController {
+    @Autowired
     private StudentServiceImpl studentServiceImpl;
+    @Autowired
+    private CsvExportService csvExportService;
 
-
-    public StudentController(StudentServiceImpl studentServiceImpl) {
+    public StudentController(StudentServiceImpl studentServiceImpl, CsvExportService csvExportService) {
         this.studentServiceImpl = studentServiceImpl;
+        this.csvExportService = csvExportService;
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<Student> addStudent(@RequestBody @Valid Student student){
-       return new ResponseEntity<>(studentServiceImpl.addStudent(student), HttpStatus.OK);
+    public ResponseEntity<Student> addStudent(@RequestBody @Valid Student student) {
+        return new ResponseEntity<>(studentServiceImpl.addStudent(student), HttpStatus.OK);
     }
+
     @DeleteMapping("/{id}")
-    public String deleteStudent(@PathVariable int id){
+    public String deleteStudent(@PathVariable int id) {
         return studentServiceImpl.deleteById(id);
     }
 
     @GetMapping("/{id}")
     @JsonView(View.ShowMinimal.class)
     public ResponseEntity<Student> findById(@PathVariable int id) throws WrongIdException {
-    return new ResponseEntity<>(studentServiceImpl.findById(id), HttpStatus.OK);
+        return new ResponseEntity<>(studentServiceImpl.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/{id}/listOfCourses")
-    public List<Course> findAllCoursesByStudentId(@PathVariable int id){
-        return studentServiceImpl.findAllCoursesByStudentId(id);
+    public ResponseEntity<FileSystemResource> findAllCoursesByStudentId(@PathVariable int id) {
+        List<Course> courses = studentServiceImpl.findAllCoursesByStudentId(id);
+        String[] headers = {"Course ID", "Name"};
+        // Use the CsvExportService to convert the JSON-like data to CSV
+        String csvData = csvExportService.exportToCsv(courses, headers);
+        // Specify the filename for the CSV file
+        String filename = "student-courses.csv";
+        // Save the CSV file to your IntelliJ project directory
+        String projectPath = "csv-exports"; // Replace with your project directory path
+        try {
+            String filePath = projectPath + "/" + filename;
+            Files.write(Paths.get(filePath), csvData.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // Use the exportCsvFileToResponse method to send the CSV file as a response
+        ResponseEntity<FileSystemResource> responseEntity = csvExportService.exportCsvFileToResponse(filename, csvData);
+        return responseEntity;
     }
-
     @PutMapping("/{id}/update")
-    public Student updateStudentsName(@PathVariable int id, @RequestBody Student student){
-        return  studentServiceImpl.updateStudentsName(id,student);
+    public Student updateStudentsName(@PathVariable int id, @RequestBody Student student) {
+        return studentServiceImpl.updateStudentsName(id, student);
     }
 
     @GetMapping("/{studentId}/{professorId}/courses")
-    public List<String> findByStudentAndProfessor(@PathVariable int studentId, @PathVariable int professorId){
-        return studentServiceImpl.findByStudentAndProfessor(studentId,professorId);
+    public List<String> findByStudentAndProfessor(@PathVariable int studentId, @PathVariable int professorId) {
+        return studentServiceImpl.findByStudentAndProfessor(studentId, professorId);
     }
+
     @GetMapping("/success")
-    public String success(){
+    public String success() {
         return "success";
     }
+
 }
