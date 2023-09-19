@@ -5,12 +5,14 @@ public enum Roles {
     PROFESSOR,
     ADMIN;
 
-//    private String message;
+    Roles() {
+    }
+    //    private String message;
 //
 //    Roles(String message) {
 //        this.message = message;
 //    }
-
+//
 //    public String getMessage() {
 //        return message;
 //    }

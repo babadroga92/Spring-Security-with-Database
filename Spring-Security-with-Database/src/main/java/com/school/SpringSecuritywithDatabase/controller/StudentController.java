@@ -1,6 +1,7 @@
 package com.school.SpringSecuritywithDatabase.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.lowagie.text.DocumentException;
 import com.school.SpringSecuritywithDatabase.exc.WrongIdException;
 import com.school.SpringSecuritywithDatabase.model.Course;
 import com.school.SpringSecuritywithDatabase.model.CoursesTaken;
@@ -9,6 +10,7 @@ import com.school.SpringSecuritywithDatabase.model.registration.StudentRegistrat
 import com.school.SpringSecuritywithDatabase.model.registration.StudentRegistrationService;
 import com.school.SpringSecuritywithDatabase.service.StudentServiceImpl;
 import com.school.SpringSecuritywithDatabase.service.csv.CsvExportService;
+import com.school.SpringSecuritywithDatabase.service.pdf.UserPDFExporter;
 import com.school.SpringSecuritywithDatabase.view.View;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -18,10 +20,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,6 +42,22 @@ public class StudentController {
         this.studentServiceImpl = studentServiceImpl;
         this.csvExportService = csvExportService;
     }
+@GetMapping("listOfAll/export/pdf")
+public void exportToPDF(HttpServletResponse response) throws DocumentException, IOException {
+    response.setContentType("application/pdf");
+    DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+    String currentDateTime = dateFormatter.format(new Date());
+
+    String headerKey = "Content-Disposition";
+    String headerValue = "attachment; filename=students_" + currentDateTime + ".pdf";
+    response.setHeader(headerKey, headerValue);
+
+    List<Student> listStudents = studentServiceImpl.findAll();
+
+    UserPDFExporter exporter = new UserPDFExporter(listStudents);
+    exporter.export(response);
+
+}
 
     @PostMapping("/registration")
     public ResponseEntity<Student> addStudent(@RequestBody @Valid Student student) {
@@ -54,7 +75,7 @@ public class StudentController {
         return new ResponseEntity<>(studentServiceImpl.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}/listOfCourses")
+        @GetMapping("/{id}/listOfCourses")
     public ResponseEntity<FileSystemResource> findAllCoursesByStudentId(@PathVariable int id) {
         List<Course> courses = studentServiceImpl.findAllCoursesByStudentId(id);
         String[] headers = {"Course ID", "Name"};

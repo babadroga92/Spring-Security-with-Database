@@ -34,16 +34,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/image/**").permitAll()
                 .antMatchers("/api/v*/registration/**").permitAll()
                 .antMatchers("/user/**", "/userApi/**").permitAll()
-                .antMatchers("/coursesTaken/**").permitAll()
-                .antMatchers("/admin/**").permitAll()
+                .antMatchers("/coursesTaken/**").hasRole("STUDENT")
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/registration/**", "/success/**").permitAll()
-                .antMatchers("/student/**").permitAll()
+                .antMatchers("/student/**").hasRole("STUDENT")
                 .antMatchers("/courses/**").permitAll()
-                .antMatchers("/professor/**", "/coursesTaught/**").permitAll();
-//                .anyRequest().authenticated()
-//                .and()
-////                .httpBasic();
-//                .formLogin().loginPage("/login").defaultSuccessUrl("/success").permitAll();
+                .antMatchers("/professor/**", "/coursesTaught/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .httpBasic();
+//                .formLogin();
+//                .loginPage("/login").defaultSuccessUrl("/success").permitAll();
 
     }
     @Bean

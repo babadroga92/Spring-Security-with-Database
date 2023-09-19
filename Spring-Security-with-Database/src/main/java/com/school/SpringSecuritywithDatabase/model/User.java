@@ -1,5 +1,6 @@
 package com.school.SpringSecuritywithDatabase.model;
 
+import com.lowagie.text.pdf.PdfPCell;
 import com.school.SpringSecuritywithDatabase.enums.Roles;
 import com.school.SpringSecuritywithDatabase.model.registration.token.ConfirmationToken;
 
@@ -44,12 +45,13 @@ public  class User {
         this.roles = roles;
     }
 
-    public int getId() {
-        return id;
-    }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getUsername() {
