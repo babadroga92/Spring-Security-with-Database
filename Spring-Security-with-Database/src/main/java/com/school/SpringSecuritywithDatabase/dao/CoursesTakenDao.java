@@ -19,11 +19,13 @@ public interface CoursesTakenDao extends JpaRepository<CoursesTaken, Integer> {
     @Query("Select c.course from CoursesTaken c where c.student.id= :studentId")
     List<Course> findAllCoursesByStudentId(int studentId);
 
+
+
     @Query("Select ct.course.name from CoursesTaken ct where ct.student.name = :name")
     List<String> findAllCoursesByStudentName(String name);
 
     @Query("Select new com.school.SpringSecuritywithDatabase.dto.CourseDTO" +
-            "(ct.course.name, ct.grade) from CoursesTaken ct where ct.student.name = :name")
+            "(ct.course.name, ct.grade, ct.student.name) from CoursesTaken ct where ct.student.name = :name")
     List<CourseDTO> findAllCoursesByStudentNameDto(String name);
 
     @Query("Select count(distinct ct.student.id) from CoursesTaken ct where ct.course.name = :name")

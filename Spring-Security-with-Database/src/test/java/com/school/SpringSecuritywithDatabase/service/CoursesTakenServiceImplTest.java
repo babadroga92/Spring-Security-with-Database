@@ -89,8 +89,8 @@ class CoursesTakenServiceImplTest extends AbstractServiceImplTest{
 
     @Test
     void findAllCoursesByStudentNameDto() {
-        CourseDTO java = new CourseDTO("java", null);
-        CourseDTO python = new CourseDTO("python", null);
+        CourseDTO java = new CourseDTO("java", null, null);
+        CourseDTO python = new CourseDTO("python", null, null);
         List<CourseDTO> courseDTOList = new ArrayList<>();
         courseDTOList.add(java);
         courseDTOList.add(python);
