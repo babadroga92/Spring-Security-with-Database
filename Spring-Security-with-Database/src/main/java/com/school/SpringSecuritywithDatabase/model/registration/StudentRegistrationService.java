@@ -22,7 +22,7 @@ public class StudentRegistrationService {
     }
 
     public void register(StudentRegistrationRequest request){
-        studentService.addStudent(new Student(
+        studentService.create(new Student(
                 request.getName()
         ));
     }

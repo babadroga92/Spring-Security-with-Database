@@ -44,7 +44,7 @@ class StudentServiceImplMockitoTest extends AbstractServiceImplTest{
     @Test
     void addStudent() {
         when(studentDao.save(any())).thenReturn(this.student);
-        Student s1 = studentServiceImpl.addStudent(this.student);
+        Student s1 = studentServiceImpl.create(this.student);
         assertNotNull(s1);
         assertEquals(this.student.getName(), s1.getName());
     }
@@ -62,14 +62,14 @@ class StudentServiceImplMockitoTest extends AbstractServiceImplTest{
     @Test
     void deleteById() {
         when(studentDao.findById(anyInt())).thenReturn(Optional.of(this.student));
-        String result = studentServiceImpl.deleteById(this.student.getId());
+        String result = studentServiceImpl.delete(this.student.getId());
         assertEquals("student deleted", result);
     }
 
     @Test
     void findById() {
         when(studentDao.findById(anyInt())).thenReturn(Optional.of(this.student));
-        Student serviceStudent = studentServiceImpl.findById(this.student.getId());
+        Student serviceStudent = studentServiceImpl.getById(this.student.getId());
         assertEquals(this.student.getName(), serviceStudent.getName());
     }
 

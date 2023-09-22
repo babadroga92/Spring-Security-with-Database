@@ -6,13 +6,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface StudentService {
-    Student addStudent(Student student);
-
-    List<Student> findAll();
-    String deleteById(int id);
-
-    Student findById(int id);
+public interface StudentService extends GenericService<Student> {
 
     List<Course> findAllCoursesByStudentId(int id);
     List<String> findByStudentAndProfessor(int studentId, int professorId);
@@ -21,6 +15,5 @@ public interface StudentService {
     void findAllStudentsTWithoutUserId();
 
     void findAllStudentsTWithoutUserIdCustomScheduling();
-
 
 }

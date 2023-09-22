@@ -49,7 +49,7 @@ class StudentControllerMockitoTest extends AbstractControllerMockitoTest{
     @Test
     @WithMockUser(roles = "STUDENT")
     void addStudent() throws Exception {
-        when(studentServiceImpl.addStudent(any())).thenReturn(this.student);
+        when(studentServiceImpl.create(any())).thenReturn(this.student);
         MvcResult r = mockMvc.perform(post("/student").contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsBytes(student))).andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Nina Jojic"))
@@ -61,7 +61,7 @@ class StudentControllerMockitoTest extends AbstractControllerMockitoTest{
     @Test
     @WithAnonymousUser
     void addStudentWithoutUser() throws Exception {
-        when(studentServiceImpl.addStudent(any())).thenReturn(this.student);
+        when(studentServiceImpl.create(any())).thenReturn(this.student);
         mockMvc.perform(post("/student")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(student)))
@@ -80,7 +80,7 @@ class StudentControllerMockitoTest extends AbstractControllerMockitoTest{
     @Test
     @WithMockUser(roles = "STUDENT")
     void findById() throws Exception {
-        when(studentServiceImpl.findById(anyInt())).thenReturn(this.student);
+        when(studentServiceImpl.getById(anyInt())).thenReturn(this.student);
         MvcResult r = mockMvc.perform(get("/student/{id}", 1))
                 .andDo(print())
                 .andExpect(status().isOk())

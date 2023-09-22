@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class StudentServiceImpl implements StudentService{
+public class StudentServiceImpl extends GenericServiceImpl<Student> implements StudentService{
 
     private final Logger logger = (Logger) LoggerFactory.getLogger(this.getClass());
 
@@ -42,17 +42,27 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public Student addStudent(Student student) {
-        return this.studentDao.save(student);
-    }
-
-    @Override
     public List<Student> findAll() {
         return this.studentDao.findAll();
     }
 
     @Override
-    public String deleteById(int id)throws WrongIdException {
+    public Student getById(int id) throws WrongIdException{
+        Optional<Student> optional = this.studentDao.findById(id);
+        if(optional.isPresent()){
+            return optional.get();
+        }else {
+            throw new WrongIdException("Student with id " + id + " doesn't exist.");
+        }
+    }
+    @Override
+    public Student create(Student entity) {
+        return this.studentDao.save(entity);
+    }
+
+
+    @Override
+    public String delete(int id) throws WrongIdException {
         Optional<Student> optional = studentDao.findById(id);
         if(optional.isPresent()){
             studentDao.deleteById(id);
@@ -61,18 +71,6 @@ public class StudentServiceImpl implements StudentService{
             throw new WrongIdException("Student with " + id + " doesn't exist.");
         }
     }
-
-    @Override
-    public Student findById(int id) throws WrongIdException{
-        Optional<Student> optional = this.studentDao.findById(id);
-        if(optional.isPresent()){
-            return optional.get();
-        }else {
-            throw new WrongIdException("Student with id " + id + " doesn't exist.");
-        }
-    }
-
-
     @Override
     public List<Course> findAllCoursesByStudentId(int id)throws NotEnrolled {
         Optional<Student> student = studentDao.findById(id);
@@ -105,7 +103,7 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public Student updateStudentsName(int id, Student student) {
-        Student studentDb = findById(id);
+        Student studentDb = getById(id);
         studentDb.setName(student.getName());
         return studentDao.save(studentDb);
     }

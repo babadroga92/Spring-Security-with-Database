@@ -1,8 +1,10 @@
 package com.school.SpringSecuritywithDatabase.controller;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.school.SpringSecuritywithDatabase.exc.WrongIdException;
 import com.school.SpringSecuritywithDatabase.model.CoursesTaught;
 import com.school.SpringSecuritywithDatabase.model.CoursesTaughtRequest;
 import com.school.SpringSecuritywithDatabase.service.CoursesTaughtServiceImpl;
+import com.school.SpringSecuritywithDatabase.view.View;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +32,7 @@ public class CoursesTaughtController {
     }
 
     @PutMapping("/update/{id}")
+    @JsonView(View.ShowMinimal.class)
     public CoursesTaught updateCourseId(@PathVariable("id")int id, @RequestBody CoursesTaughtRequest request) throws WrongIdException{
        return coursesTaughtServiceImpl.updateCourseId(request,id);
     }
