@@ -4,22 +4,16 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.lowagie.text.DocumentException;
 import com.school.SpringSecuritywithDatabase.exc.WrongIdException;
 import com.school.SpringSecuritywithDatabase.model.Course;
-import com.school.SpringSecuritywithDatabase.model.CoursesTaken;
 import com.school.SpringSecuritywithDatabase.model.Student;
-import com.school.SpringSecuritywithDatabase.model.registration.StudentRegistrationRequest;
-import com.school.SpringSecuritywithDatabase.model.registration.StudentRegistrationService;
 import com.school.SpringSecuritywithDatabase.service.StudentServiceImpl;
 import com.school.SpringSecuritywithDatabase.service.csv.CsvExportService;
 import com.school.SpringSecuritywithDatabase.service.pdf.UserPDFExporter;
 import com.school.SpringSecuritywithDatabase.view.View;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -28,17 +22,16 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
-
 @RestController
 @RequestMapping("/student")
-public class StudentController {
+public class StudentController extends GenericController<Student>{
     @Autowired
     private StudentServiceImpl studentServiceImpl;
     @Autowired
     private CsvExportService csvExportService;
 
     public StudentController(StudentServiceImpl studentServiceImpl, CsvExportService csvExportService) {
+        super(studentServiceImpl);
         this.studentServiceImpl = studentServiceImpl;
         this.csvExportService = csvExportService;
     }
@@ -61,19 +54,27 @@ public void exportToPDF(HttpServletResponse response) throws DocumentException, 
 
     @PostMapping("/registration")
     public ResponseEntity<Student> addStudent(@RequestBody @Valid Student student) {
-        return new ResponseEntity<>(studentServiceImpl.addStudent(student), HttpStatus.OK);
+        return new ResponseEntity<>(studentServiceImpl.create(student), HttpStatus.OK);
     }
-
+    @Override
     @DeleteMapping("/{id}")
-    public String deleteStudent(@PathVariable int id) {
-        return studentServiceImpl.deleteById(id);
+    public String delete(@PathVariable int id) {
+        return super.delete(id);
     }
 
+    @Override
     @GetMapping("/{id}")
     @JsonView(View.ShowMinimal.class)
-    public ResponseEntity<Student> findById(@PathVariable int id) throws WrongIdException {
-        return new ResponseEntity<>(studentServiceImpl.findById(id), HttpStatus.OK);
+    public Student getById(@PathVariable int id) throws WrongIdException {
+        return super.getById(id);
     }
+
+
+//    @GetMapping
+//    @JsonView(View.ShowMinimal.class)
+//    public ResponseEntity<Student> findById(@PathVariable int id) throws WrongIdException {
+//        return new ResponseEntity<>(studentServiceImpl.getById(id), HttpStatus.OK);
+//    }
 
         @GetMapping("/{id}/listOfCourses")
     public ResponseEntity<FileSystemResource> findAllCoursesByStudentId(@PathVariable int id) {

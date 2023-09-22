@@ -2,6 +2,9 @@ package com.school.SpringSecuritywithDatabase.model;
 
 
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.school.SpringSecuritywithDatabase.view.View;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,6 +13,7 @@ public class CoursesTaught {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(View.ShowMinimal.class)
     private int id;
 
     @ManyToOne
@@ -20,6 +24,7 @@ public class CoursesTaught {
     @ManyToOne
     @JoinColumn(name = "course_id")
     //@JsonIgnore
+    @JsonView(View.ShowMinimal.class)
     private Course course;
 
     public CoursesTaught() {

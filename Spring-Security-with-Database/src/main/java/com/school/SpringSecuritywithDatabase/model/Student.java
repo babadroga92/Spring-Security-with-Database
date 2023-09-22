@@ -2,6 +2,7 @@ package com.school.SpringSecuritywithDatabase.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.school.SpringSecuritywithDatabase.model.generic.GenericEntity;
 import com.school.SpringSecuritywithDatabase.view.View;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "student")
-public class Student {
+public class Student extends GenericEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
