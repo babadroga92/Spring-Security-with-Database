@@ -11,10 +11,10 @@ import java.util.List;
 @Entity
 @Table(name = "student")
 public class Student extends GenericEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    @JsonView(View.ShowMinimal.class)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id")
+//    @JsonView(View.ShowMinimal.class)
     private int id;
     @Column(name = "name")
     @JsonView(View.ShowMinimal.class)
@@ -47,13 +47,13 @@ public class Student extends GenericEntity {
         this.name = name;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
 
     public String getName() {
         return name;

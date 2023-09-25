@@ -1,16 +1,20 @@
 package com.school.SpringSecuritywithDatabase.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.school.SpringSecuritywithDatabase.model.generic.GenericEntity;
+import com.school.SpringSecuritywithDatabase.view.View;
 
 import javax.persistence.*;
 import java.util.List;
 @Entity
 @Table(name = "professor")
-public class Professor {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+public class Professor extends GenericEntity {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id")
+//    private int id;
+    @JsonView(View.ShowMinimal.class)
     private String name;
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -37,13 +41,13 @@ public class Professor {
         this.name = name;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
 
     public String getName() {
         return name;

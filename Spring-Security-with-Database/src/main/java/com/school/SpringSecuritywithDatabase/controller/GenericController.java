@@ -18,6 +18,7 @@ public abstract class GenericController<E extends GenericEntity> {
         this.genericService = genericService;
     }
 
+
     @PostMapping
     public E create(@RequestBody E entity) {
         return genericService.create(entity);
@@ -36,6 +37,6 @@ public abstract class GenericController<E extends GenericEntity> {
     @DeleteMapping("/{id}")
     public String delete(@PathVariable int id) {
         genericService.delete(id);
-        return null;
+        return "The entity with id: " + id + " has been deleted";
     }
 }

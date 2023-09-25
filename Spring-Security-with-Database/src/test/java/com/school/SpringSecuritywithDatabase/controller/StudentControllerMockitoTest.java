@@ -71,7 +71,7 @@ class StudentControllerMockitoTest extends AbstractControllerMockitoTest{
     @Test
     @WithMockUser(roles = "STUDENT")
     void deleteStudent() throws Exception {
-        when(studentServiceImpl.deleteById(anyInt())).thenReturn("student deleted");
+        when(studentServiceImpl.delete(anyInt())).thenReturn("student deleted");
         MvcResult r = mockMvc.perform(delete("/student/{id}", student.getId())).andExpect(status().isOk()).andReturn();
         assertEquals("student deleted", r.getResponse().getContentAsString());
     }

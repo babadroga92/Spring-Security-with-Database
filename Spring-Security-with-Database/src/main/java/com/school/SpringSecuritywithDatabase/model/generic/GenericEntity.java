@@ -1,14 +1,18 @@
 package com.school.SpringSecuritywithDatabase.model.generic;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.school.SpringSecuritywithDatabase.view.View;
+
+import javax.persistence.*;
 
 @MappedSuperclass //this class wont be represented in database
 public abstract class GenericEntity {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    @JsonView(View.ShowMinimal.class)
     private int id;
 
     public GenericEntity() {
