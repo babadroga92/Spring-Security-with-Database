@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -27,13 +28,14 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
-//@WebMvcTest(StudentController.class)
+
 class StudentControllerMockitoTest extends AbstractControllerMockitoTest{
 
     private Student student;
@@ -65,8 +67,9 @@ class StudentControllerMockitoTest extends AbstractControllerMockitoTest{
         mockMvc.perform(post("/student")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(student)))
-                        .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("http://localhost/login"));
+                .andExpect(status().isUnauthorized());
+//                        .andExpect(status().is3xxRedirection())
+//                .andExpect(redirectedUrl("http://localhost/login")); THIS IS USED WHEN THERE IS A FORM_LOGIN WITH REDIRECTION TO LOGIN PAGE
     }
     @Test
     @WithMockUser(roles = "STUDENT")
@@ -75,8 +78,6 @@ class StudentControllerMockitoTest extends AbstractControllerMockitoTest{
         MvcResult r = mockMvc.perform(delete("/student/{id}", student.getId())).andExpect(status().isOk()).andReturn();
         assertEquals("student deleted", r.getResponse().getContentAsString());
     }
-
-
     @Test
     @WithMockUser(roles = "STUDENT")
     void findById() throws Exception {
@@ -101,12 +102,19 @@ class StudentControllerMockitoTest extends AbstractControllerMockitoTest{
         when(studentServiceImpl.findAllCoursesByStudentId(anyInt())).thenReturn(courseList);
         MvcResult r = mockMvc.perform(get("/student/{id}/listOfCourses", anyInt()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name").value(courseList.get(0).getName())).andReturn();
-        List<Course> objectMapperList = objectMapper.readValue(r.getResponse().getContentAsByteArray(), new TypeReference<>() {
-        });
-        assertNotNull(objectMapperList);
-        assertEquals(courseList.size(), objectMapperList.size());
-        assertEquals(courseList.get(0).getName(), objectMapperList.get(0).getName());
+                .andExpect(content().contentType("application/octet-stream"))
+                .andReturn();
+        String csvContent = r.getResponse().getContentAsString();
+        // Split the CSV content into rows (assuming it's comma-separated)
+        String[] csvRows = csvContent.split("\n");
+        // Verify the number of rows matches the expected number + 1 (for the header row)
+        assertEquals(courseList.size() + 1, csvRows.length);
+//         Verify each row matches the expected data
+        for (int i = 1; i < csvRows.length; i++) {
+            Course course = courseList.get(i - 1);
+            String expectedRow = String.format("%d,%s", course.getId(), course.getName());
+            assertEquals(expectedRow, csvRows[i].trim());
+        }
     }
 
     @Test

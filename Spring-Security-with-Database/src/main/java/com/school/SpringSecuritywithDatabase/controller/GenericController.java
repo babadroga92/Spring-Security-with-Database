@@ -36,7 +36,6 @@ public abstract class GenericController<E extends GenericEntity> {
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable int id) {
-        genericService.delete(id);
-        return "The entity with id: " + id + " has been deleted";
+       return genericService.delete(id);
     }
 }

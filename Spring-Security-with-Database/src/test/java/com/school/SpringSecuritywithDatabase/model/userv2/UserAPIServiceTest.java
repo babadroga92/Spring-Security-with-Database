@@ -46,7 +46,6 @@ class UserAPIServiceTest extends AbstractServiceImplTest {
                });
     }
 
-    //int id, String name, String username, String email, Address address String street, String suite, String city, String zipCode
     @Test
     void addUser() {
         UserApiPost userApiPost = new UserApiPost(1,"Nemanja", "babadroga", "nemus@yahoo.com",
