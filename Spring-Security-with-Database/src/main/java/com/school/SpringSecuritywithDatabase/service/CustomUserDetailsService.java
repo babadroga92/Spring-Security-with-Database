@@ -53,9 +53,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(java.lang.String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
        User user =  userDao.findByUsername(username);
-        CustomUserDetails userDetails = null;
+        CustomUserDetails userDetails;
         if(user !=null){
           userDetails = new CustomUserDetails();
           userDetails.setUser(user);
@@ -117,16 +117,16 @@ public class CustomUserDetailsService implements UserDetailsService {
         );
         return token;
     }
-    public int enableUser(java.lang.String email){
+    public int enableUser(String email){
         return userDao.enableUser(email);
     }
 
-    public User findByEmail(java.lang.String email) {
+    public User findByEmail(String email) {
         Optional<User> optional = userDao.findByEmail(email);
         if(optional.isPresent()){
             return optional.get();
         }else {
-          throw new UsernameNotFoundException(java.lang.String.format(USER_NOT_FOUND_MSG, email));
+          throw new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, email));
         }
     }
     public String deleteById(int id) throws WrongIdException{

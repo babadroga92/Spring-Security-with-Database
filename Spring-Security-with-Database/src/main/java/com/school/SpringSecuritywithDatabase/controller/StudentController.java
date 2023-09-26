@@ -69,13 +69,6 @@ public void exportToPDF(HttpServletResponse response) throws DocumentException, 
         return super.getById(id);
     }
 
-
-//    @GetMapping
-//    @JsonView(View.ShowMinimal.class)
-//    public ResponseEntity<Student> findById(@PathVariable int id) throws WrongIdException {
-//        return new ResponseEntity<>(studentServiceImpl.getById(id), HttpStatus.OK);
-//    }
-
         @GetMapping("/{id}/listOfCourses")
     public ResponseEntity<FileSystemResource> findAllCoursesByStudentId(@PathVariable int id) {
         List<Course> courses = studentServiceImpl.findAllCoursesByStudentId(id);

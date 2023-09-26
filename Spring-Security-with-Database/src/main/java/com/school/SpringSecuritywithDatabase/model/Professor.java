@@ -10,10 +10,7 @@ import java.util.List;
 @Entity
 @Table(name = "professor")
 public class Professor extends GenericEntity {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id")
-//    private int id;
+
     @JsonView(View.ShowMinimal.class)
     private String name;
     @OneToOne
@@ -40,14 +37,6 @@ public class Professor extends GenericEntity {
     public Professor(String name) {
         this.name = name;
     }
-
-//    public int getId() {
-//        return id;
-//    }
-//
-//    public void setId(int id) {
-//        this.id = id;
-//    }
 
     public String getName() {
         return name;
