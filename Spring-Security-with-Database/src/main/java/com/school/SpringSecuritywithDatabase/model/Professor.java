@@ -15,6 +15,7 @@ public class Professor extends GenericEntity {
     private String name;
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonView(View.ShowMinimal.class)
     private User user;
     @ManyToMany
     @JoinTable(

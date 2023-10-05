@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 public class CustomUserDetails implements UserDetails {
 
@@ -26,9 +27,12 @@ public class CustomUserDetails implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        for (Roles role : Roles.values()) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
-        }
+        // Assuming user.getRoles() returns a single role (Roles enum)
+        Roles userRole = user.getRoles();
+
+        // Grant authority based on the user's role
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + userRole.name()));
+
         return authorities;
     }
 

@@ -32,7 +32,7 @@ public class RegistrationService {
         this.userDao = userDao;
     }
     public String register(RegistrationRequest request){
-//        Roles role = Roles.fromString(request.getRole());
+        Roles role = request.getRole();
         Optional<User> findByEmail = userDao.findByEmail(request.getEmail());
         if(findByEmail.isPresent()){
             throw new EmailAlreadyInUse("This email is already in use");
@@ -42,7 +42,7 @@ public class RegistrationService {
                         request.getUsername(),
                         request.getPassword(),
                         request.getEmail(),
-                        Roles.STUDENT
+                        role
                 )
         );
         String link = "http://localhost:8080/api/v1/registration/confirm?token=" + token;
