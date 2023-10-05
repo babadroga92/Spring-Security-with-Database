@@ -90,9 +90,6 @@ class StudentControllerMockitoTest extends AbstractControllerMockitoTest{
         Student s1 = objectMapper.readValue(r.getResponse().getContentAsByteArray(), Student.class);
         assertEquals(student.getName(), s1.getName());
     }
-
-
-
     @Test
     @WithMockUser(roles = "STUDENT")
     void findAllCoursesByStudentId() throws Exception {
@@ -105,7 +102,7 @@ class StudentControllerMockitoTest extends AbstractControllerMockitoTest{
                 .andExpect(content().contentType("application/octet-stream"))
                 .andReturn();
         String csvContent = r.getResponse().getContentAsString();
-        // Split the CSV content into rows (assuming it's comma-separated)
+        // Split the CSV content into rows
         String[] csvRows = csvContent.split("\n");
         // Verify the number of rows matches the expected number + 1 (for the header row)
         assertEquals(courseList.size() + 1, csvRows.length);

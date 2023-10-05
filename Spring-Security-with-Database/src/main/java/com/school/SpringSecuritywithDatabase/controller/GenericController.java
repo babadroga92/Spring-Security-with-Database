@@ -1,5 +1,4 @@
 package com.school.SpringSecuritywithDatabase.controller;
-
 import com.school.SpringSecuritywithDatabase.model.generic.GenericEntity;
 import com.school.SpringSecuritywithDatabase.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api/generic")
 public abstract class GenericController<E extends GenericEntity> {
     @Autowired
     private final GenericService<E> genericService;

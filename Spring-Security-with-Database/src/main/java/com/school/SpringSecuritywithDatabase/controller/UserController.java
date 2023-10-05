@@ -40,9 +40,13 @@ public class UserController {
     public String updatePassword(@RequestBody UserDTO userDTO) {
         return this.customUserDetailsService.updatePassword(userDTO);
     }
+//    @PostMapping("/registration")
+//    public void addUser(@RequestBody RegistrationRequest request) {
+//        registrationService.register(request);
+//    }
     @PostMapping("/registration")
-    public void addUser(@RequestBody RegistrationRequest request) {
-        registrationService.register(request);
+    public void addUser(@RequestBody User user) {
+        customUserDetailsService.addUser(user);
     }
 
     @GetMapping("/{email}")

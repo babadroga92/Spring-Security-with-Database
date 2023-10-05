@@ -31,7 +31,7 @@ public class ProfessorServiceImpl extends GenericServiceImpl<Professor> implemen
         if(optional.isPresent()){
             return optional.get();
         }else {
-            throw new WrongIdException("Student with id " + id + " doesn't exist.");
+            throw new WrongIdException("Professor with id " + id + " doesn't exist.");
         }
     }
 

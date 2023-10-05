@@ -1,10 +1,10 @@
 package com.school.SpringSecuritywithDatabase.securityConfig;
-
 import com.school.SpringSecuritywithDatabase.enums.Roles;
-import org.apache.catalina.session.DataSourceStore;
+import com.school.SpringSecuritywithDatabase.service.jwtUtil.filter.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,7 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -23,6 +22,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -34,21 +37,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/image/**").permitAll()
-                .antMatchers("/api/v*/registration/**").permitAll()
-                .antMatchers("/user/**", "/userApi/**").permitAll()
-                .antMatchers("/coursesTaken/**").hasRole("STUDENT")
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/registration/**", "/success/**").permitAll()
-                .antMatchers("/student/**").hasRole("STUDENT")
-                .antMatchers("/courses/**").permitAll()
-                .antMatchers("/professor/**", "/coursesTaught/**").permitAll()
+                .antMatchers("/jwt/**", "/user/**").permitAll()
+                .antMatchers("/professor/**").hasRole(Roles.PROFESSOR.name())
+                .antMatchers("/student/**").hasRole(Roles.STUDENT.name())
+                .antMatchers("/admin/**").hasRole(Roles.ADMIN.name())
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
 //                .formLogin();
-//                .loginPage("/login").defaultSuccessUrl("/success").permitAll();
+    }
 
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception{
+        return super.authenticationManagerBean();
     }
     @Bean
     public BCryptPasswordEncoder encodePwd(){

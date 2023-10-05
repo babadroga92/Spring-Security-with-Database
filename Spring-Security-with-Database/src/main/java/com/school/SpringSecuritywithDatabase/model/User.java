@@ -1,8 +1,10 @@
 package com.school.SpringSecuritywithDatabase.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.lowagie.text.pdf.PdfPCell;
 import com.school.SpringSecuritywithDatabase.enums.Roles;
 import com.school.SpringSecuritywithDatabase.model.registration.token.ConfirmationToken;
+import com.school.SpringSecuritywithDatabase.view.View;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,11 +15,12 @@ public  class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    @JsonView(View.ShowMinimal.class)
     private String username;
     private String password;
     private String email;
     @Enumerated(EnumType.STRING)
+    @JsonView(View.ShowMinimal.class)
     private Roles roles;
     private boolean isEnabled = false;
     private boolean canBeDeleted = false;

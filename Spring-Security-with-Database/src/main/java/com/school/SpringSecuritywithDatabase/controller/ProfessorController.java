@@ -35,6 +35,7 @@ public class ProfessorController extends GenericController<Professor>{
     }
 
     @GetMapping("/{id}/professor-id")
+    @JsonView(View.ShowMinimal.class)
     public ResponseEntity<Professor> findById(@PathVariable int id) throws WrongIdException {
         return new ResponseEntity<>(professorServiceImpl.getById(id), HttpStatus.OK);
     }

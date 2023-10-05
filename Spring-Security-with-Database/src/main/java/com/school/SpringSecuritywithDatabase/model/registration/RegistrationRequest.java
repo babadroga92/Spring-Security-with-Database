@@ -1,15 +1,17 @@
 package com.school.SpringSecuritywithDatabase.model.registration;
 
 
+import com.school.SpringSecuritywithDatabase.enums.Roles;
+
 public class RegistrationRequest {
     private String username;
     private String password;
     private String email;
-    private String role;
+    private Roles role;
 
     public RegistrationRequest() {
     }
-    public RegistrationRequest(String username, String password, String email, String role) {
+    public RegistrationRequest(String username, String password, String email, Roles role) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -40,11 +42,11 @@ public class RegistrationRequest {
         this.email = email;
     }
 
-    public String getRole() {
+    public Roles getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Roles role) {
         this.role = role;
     }
 
