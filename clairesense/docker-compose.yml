@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: clairesense
+    environment:
+      POSTGRES_DB: clairesense
+      POSTGRES_USER: clairesense_user
+      POSTGRES_PASSWORD: clairesense_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - clairesense_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  clairesense_postgres_data:
